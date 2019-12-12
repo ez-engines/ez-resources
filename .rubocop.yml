@@ -1,0 +1,21 @@
+AllCops:
+  TargetRubyVersion: 2.5
+  Exclude:
+    - Guardfile
+    - config.ru
+    - spec/dummy/**/*
+
+Style/Documentation:
+  Enabled: false
+
+Metrics/LineLength:
+  Max: 120
+
+Layout/HashAlignment:
+  EnforcedColonStyle: table
+  EnforcedHashRocketStyle: table
+
+Metrics/BlockLength:
+  ExcludedMethods: [
+    'describe', 'context', 'it', 'let', 'before', 'after', 'aggregate_failures', 'scenario'
+  ]
