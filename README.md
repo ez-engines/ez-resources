@@ -21,6 +21,9 @@ Or install it yourself as:
 $ gem install ez-resources
 ```
 
+## TODO
+- [ ] Add generators for configuration and I18n
+
 ## Contributing
 Contribution directions go here.
 
