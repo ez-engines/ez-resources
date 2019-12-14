@@ -30,6 +30,11 @@ RSpec.describe 'Collection' do
 
     # Has table content
     [user_a, user_b].each do |user|
+      within "tr#users-#{user.id} > td.ez-resources-collection-table-td-actions" do
+        is_expected.to have_link 'Edit', href: "/users/#{user.id}/edit"
+        # is_expected.to have_link 'Remove', href: "users/#{user.id}"
+      end
+
       %w[email age active notes].each do |col_name|
         within "tr#users-#{user.id} > td.ez-t-#{col_name}" do
           is_expected.to have_content(user.public_send(col_name))

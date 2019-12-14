@@ -7,11 +7,15 @@ module Ez
       include ActionView::RecordIdentifier
       include ActionView::Helpers::FormOptionsHelper
 
+      def show
+        render 'show'
+      end
+
       def form_header_label
         if model.new_record?
-          "#{t('actions.new')} #{options[:resource_name].singularize.downcase}"
+          "#{t('actions.new')} #{options[:resource_name].downcase}"
         else
-          "#{t('actions.edit')} #{options[:resource_name].singularize.downcase}"
+          "#{t('actions.edit')} #{model.public_send(options[:resource_label])} #{options[:resource_name].downcase}"
         end
       end
 

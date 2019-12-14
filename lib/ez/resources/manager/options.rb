@@ -14,6 +14,10 @@ module Ez
           raise GuessingError, "Ez::Resources::Manager tried to guess model name as #{controller_name.classify} but constant is missing. You can define model class explicitly with :model options"
         end
 
+        def actions
+          @actions ||= config.actions
+        end
+
         def collection_path
           @collection_path ||= path_for_action(:index)
         end
@@ -23,19 +27,21 @@ module Ez
         end
 
         def resources_name
-          @resources_name ||= resource_name.pluralize
+          @resources_name ||= config.resources_name || resource_name.pluralize
         end
 
         def to_attribues
           [
             collection_or_record,
             {
-              resource_name:      resource_name,
-              resources_name:     resources_name,
-              new_resource_path:  path_for_action(:new),
-              collection_path:    collection_path,
-              collection_columns: collection_columns,
-              form_fields:        form_fields
+              actions:              actions,
+              resource_name:        resource_name,
+              resource_label:       config.resource_label,
+              resources_name:       resources_name,
+              new_resource_path:    path_for_action(:new),
+              collection_path:      collection_path,
+              collection_columns:   collection_columns,
+              form_fields:          form_fields
             }
         ]
         end
@@ -47,10 +53,13 @@ module Ez
         def collection_or_record
           return data if data
 
-          if controller.action_name == 'index'
-            collection
+          case controller.action_name
+          when 'index' then collection
+          when 'new'   then new_record
+          when 'edit'  then record_by_pk
           else
-            record
+            binding.pry # <====== REMOVE ME!!!
+            raise 'Invalid action'
           end
         end
 
@@ -58,8 +67,12 @@ module Ez
           @collection ||= model.all
         end
 
-        def record
-          @record ||= model.new
+        def new_record
+          @new_record ||= model.new
+        end
+
+        def record_by_pk
+          @record_by_pk ||= model.find(controller.params[:id])
         end
 
         def collection_columns

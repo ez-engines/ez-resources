@@ -58,6 +58,7 @@ module Ez
       end
 
       def edit
+        ez_resource_view :form, *ez_resource_config.to_attribues
       end
 
       def update
@@ -77,7 +78,7 @@ module Ez
       end
 
       def ez_resource_config
-        @ez_resource_config ||= Options.new(
+        Options.new(
           controller: self,
           config:     self.class.ez_resource_config,
           data:       @ez_resource

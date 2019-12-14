@@ -5,8 +5,12 @@ RSpec.describe Ez::Resources::Manager::Config do
     extend Ez::Resources::Manager::DSL
 
     ez_resource do |config|
+      config.actions %i[index new create edit update]
       config.model 'Model'
       config.resource_name 'Resource Name'
+      config.resource_label :email
+
+      config.resources_name 'Resources'
 
       # config.collection_columns %i[one two]
 
@@ -25,8 +29,12 @@ RSpec.describe Ez::Resources::Manager::Config do
 
   describe '.ez_resource' do
     it 'DSL' do
+      expect(cfg.actions.size).to eq 5
+
       expect(cfg.model).to eq 'Model'
       expect(cfg.resource_name).to eq 'Resource Name'
+      expect(cfg.resource_label).to eq :email
+      expect(cfg.resources_name).to eq 'Resources'
       expect(cfg.form_fields.size).to eq 4
       expect(cfg.form_fields[0]).to be_instance_of(Ez::Resources::Manager::Field)
       expect(cfg.form_fields[0].name).to eq :id

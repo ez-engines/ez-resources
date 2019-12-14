@@ -26,10 +26,6 @@ module Ez
       def t(args)
         I18n.t(args, scope: Ez::Resources.config.i18n_scope)
       end
-
-      # def path_for(tail = nil)
-      #   [BASE_ROUTES, tail].join('/')
-      # end
     end
   end
 end

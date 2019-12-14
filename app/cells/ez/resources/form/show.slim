@@ -9,7 +9,7 @@
       = div_for 'form-inner-container'
         = simple_form_for model, as: :ez_resource do |f|
           - options[:form_fields].each do |field|
-            = cell 'ez/resources/field', field, form: f
+            = cell 'ez/resources/field', field, form: f, new_record?: model.new_record?
 
           = div_for 'form-actions'
             = f.submit submit_button_text, class: css_for('actions-submit-button')
