@@ -30,9 +30,13 @@ module Ez
           @resources_name ||= config.resources_name || resource_name.pluralize
         end
 
+        def fetch_resource_by_pk
+          @fetch_resource_by_pk ||= model.find(controller.params[:id])
+        end
+
         def to_attribues
           [
-            collection_or_record,
+            collection_or_resource,
             {
               actions:              actions,
               resource_name:        resource_name,
@@ -50,13 +54,13 @@ module Ez
 
         attr_reader :controller, :config, :data
 
-        def collection_or_record
+        def collection_or_resource
           return data if data
 
           case controller.action_name
           when 'index' then collection
-          when 'new'   then new_record
-          when 'edit'  then record_by_pk
+          when 'new'   then new_resource
+          when 'edit'  then fetch_resource_by_pk
           else
             binding.pry # <====== REMOVE ME!!!
             raise 'Invalid action'
@@ -67,12 +71,8 @@ module Ez
           @collection ||= model.all
         end
 
-        def new_record
-          @new_record ||= model.new
-        end
-
-        def record_by_pk
-          @record_by_pk ||= model.find(controller.params[:id])
+        def new_resource
+          @new_resource ||= model.new
         end
 
         def collection_columns

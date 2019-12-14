@@ -23,9 +23,9 @@ module Ez
         end
       end
 
-      # Options:
-      # 1. Actions or all by default
-      # 2. Collection method of .all or order
+      # TODO configurabe:
+      # 1. Collection method of .all or order
+      # 2. Edit/Remove hooks?
 
       def index
         ez_resource_view :collection, *ez_resource_config.to_attribues
@@ -62,8 +62,24 @@ module Ez
       end
 
       def update
+        @ez_resource = ez_resource_config.fetch_resource_by_pk
+
+        if @ez_resource.update(ez_resource_params)
+          flash[:notice] = t('messages.updated',
+            resource_name: ez_resource_config.resource_name,
+            scope:         Ez::Resources.config.i18n_scope)
+
+          redirect_to ez_resource_config.collection_path
+        else
+          flash[:alert] = t('messages.invalid',
+            resource_name: ez_resource_config.resource_name,
+            scope:         Ez::Resources.config.i18n_scope)
+
+          ez_resource_view :form, *ez_resource_config.to_attribues
+        end
       end
 
+      # TODO: Later
       def destroy
       end
 

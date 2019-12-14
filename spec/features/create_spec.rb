@@ -6,7 +6,7 @@ RSpec.describe 'Create' do
   let(:random_attrs) { attributes_for(:user) }
   let(:created_record) { User.last }
 
-  it 'can create a record' do
+  it 'can create record' do
     visit '/users/new'
 
     fill_in 'Email', with: random_attrs[:email]
