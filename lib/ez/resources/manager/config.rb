@@ -1,3 +1,5 @@
+require 'ez/resources/manager/fields'
+
 module Ez
   module Resources
     module Manager
@@ -16,6 +18,14 @@ module Ez
 
         def collection_columns(value = nil)
           value ? @collection_columns = value : @collection_columns
+        end
+
+        def form_fields(&block)
+          if block_given?
+            @form_fields = Fields.new(&block).fields
+          else
+            @form_fields || []
+          end
         end
       end
     end

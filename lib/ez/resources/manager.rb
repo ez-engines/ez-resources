@@ -1,4 +1,4 @@
-require 'ez/resources/manager/column'
+require 'ez/resources/manager/field'
 require 'ez/resources/manager/config'
 require 'ez/resources/manager/options'
 
@@ -8,10 +8,10 @@ module Ez
       include ::Cell::RailsExtensions::ActionController
 
       def self.included(base)
-        base.extend(ClassMethods)
+        base.extend(DSL)
       end
 
-      module ClassMethods
+      module DSL
         def ez_resource_config
           @ez_resource_config || Ez::Resources::Manager::Config.new
         end
@@ -32,7 +32,7 @@ module Ez
       # 6. resource_attributes or all by default
 
       def index
-        ez_resource_view :collection, *Options.new(controller: self, config: self.class.ez_resource_config).to_attrs
+        ez_resource_view :collection, *ez_resource_view_options
       end
 
       # TODO: Later
@@ -40,6 +40,7 @@ module Ez
       end
 
       def new
+        ez_resource_view :form, *ez_resource_view_options
       end
 
       def create
@@ -58,6 +59,10 @@ module Ez
 
       def ez_resource_view(cell_name, *args)
         render html: cell("ez/resources/#{cell_name}", *args), layout: true
+      end
+
+      def ez_resource_view_options
+        Options.new(controller: self, config: self.class.ez_resource_config).to_attrs
       end
     end
   end

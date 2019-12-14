@@ -6,9 +6,9 @@ module Ez
   module Resources
     include Ez::Configurator
 
-    # configure do |config|
-    #  config.default = 'values' # can be defined here
-    # end
+    configure do |config|
+      config.ignore_fields = %w[id created_at updated_at]
+    end
 
     BaseError = Class.new(StandardError)
     GuessingError = Class.new(BaseError)

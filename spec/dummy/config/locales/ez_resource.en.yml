@@ -2,3 +2,8 @@ en:
   ez_resources:
     actions:
       add: Add
+      new: New
+      create: Create
+      edit: Edit
+      update: Update
+      cancel: Cancel

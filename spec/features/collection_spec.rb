@@ -22,7 +22,7 @@ RSpec.describe 'Collection' do
     end
 
     # Has table headers
-    %w[id email age active notes created_at updated_at].each do |col_name|
+    %w[email age active notes].each do |col_name|
       within "th#ez-t-#{col_name}" do
         is_expected.to have_content(col_name)
       end
@@ -30,7 +30,7 @@ RSpec.describe 'Collection' do
 
     # Has table content
     [user_a, user_b].each do |user|
-      %w[id email age active notes created_at updated_at].each do |col_name|
+      %w[email age active notes].each do |col_name|
         within "tr#users-#{user.id} > td.ez-t-#{col_name}" do
           is_expected.to have_content(user.public_send(col_name))
         end
