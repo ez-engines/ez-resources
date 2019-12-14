@@ -1,5 +1,6 @@
 require 'ez/resources/manager/column'
 require 'ez/resources/manager/config'
+require 'ez/resources/manager/options'
 
 module Ez
   module Resources
@@ -31,34 +32,7 @@ module Ez
       # 6. resource_attributes or all by default
 
       def index
-        ez_resource_view :collection, ez_resource_collection,
-          resource_name:      ez_resource_name,
-          new_resource_path:  ez_resource_path_for_action(:new),
-          collection_columns: ez_resource_collection_columns
-      end
-
-      def ez_resource_model
-        @ez_resource_model ||= self.class.ez_resource_config.model || controller_name.classify.constantize
-      rescue NameError
-        raise GuessingError, "Ez::Resources::Manager tried to guess model name as #{controller_name.classify} but constant is missing. You can define model class explicitly with :model options"
-      end
-
-      def ez_resource_name
-        @ez_resource_name ||= controller_name.classify.pluralize
-      end
-
-      def ez_resource_collection_columns
-        @collection_columns ||= ez_resource_model.columns.map do |column|
-          Ez::Resources::Manager::Column.new(
-            name:  column.name,
-            title: column.name.humanize,
-            type:  column.sql_type_metadata.type
-          )
-        end
-      end
-
-      def ez_resource_collection
-        @ez_resource_collection ||= ez_resource_model.all
+        ez_resource_view :collection, *Options.new(controller: self, config: self.class.ez_resource_config).to_attrs
       end
 
       # TODO: Later
@@ -84,10 +58,6 @@ module Ez
 
       def ez_resource_view(cell_name, *args)
         render html: cell("ez/resources/#{cell_name}", *args), layout: true
-      end
-
-      def ez_resource_path_for_action(action)
-        url_for(action: action, only_path: true)
       end
     end
   end
