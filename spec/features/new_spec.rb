@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe 'New' do
   subject { page }
 
-  it 'render new table' do
+  it 'render new form' do
     visit '/users'
 
     click_link 'Add'
@@ -14,5 +14,8 @@ RSpec.describe 'New' do
     is_expected.to have_field 'Age' #, text: 18
     is_expected.to have_unchecked_field 'Active'
     is_expected.to have_select 'Gender', options: ['', 'Male', 'Female', 'Other'], selected: 'Other'
+
+    click_link 'Cancel'
+    is_expected.to have_current_path '/users'
   end
 end

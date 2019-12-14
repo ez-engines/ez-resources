@@ -5,8 +5,7 @@ module Ez
     class ApplicationCell < Cell::ViewModel
       self.view_paths = ["#{Ez::Resources::Engine.root}/app/cells"]
 
-      I18N_SCOPE    = 'ez_resources'
-      CSS_SCOPE     = 'ez-resources'
+      CSS_SCOPE = 'ez-resources'
 
       def div_for(item, extra = nil, &block)
         content_tag :div, class: css_for(item, extra), &block
@@ -25,7 +24,7 @@ module Ez
       end
 
       def t(args)
-        I18n.t(args, scope: I18N_SCOPE)
+        I18n.t(args, scope: Ez::Resources.config.i18n_scope)
       end
 
       # def path_for(tail = nil)

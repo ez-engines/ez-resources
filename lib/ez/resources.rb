@@ -8,6 +8,7 @@ module Ez
 
     configure do |config|
       config.ignore_fields = %w[id created_at updated_at]
+      config.i18n_scope = 'ez_resources'
     end
 
     BaseError = Class.new(StandardError)

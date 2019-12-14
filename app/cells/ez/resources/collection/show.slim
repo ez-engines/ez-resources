@@ -3,7 +3,7 @@
     = div_for 'top-container'
       = div_for 'header-container'
         = div_for 'header-inner-container'
-          h2 class=(css_for('header-label')) = "#{resource_name} (#{collection_size})"
+          h2 class=(css_for('header-label')) = header_text
 
       = div_for 'actions-container'
         = div_for 'actions-inner-container'
@@ -18,7 +18,7 @@
                 th class=(css_for 'collection-table-th') id=("ez-t-#{column.name}") = column.name
           tbody class=(css_for 'collection-table-tbody')
             - model.each do |record|
-              tr class=(css_for 'collection-table-tr') id="#{resource_name.downcase}-#{record.id}"
+              tr class=(css_for 'collection-table-tr') id="#{resources_name.downcase}-#{record.id}"
                 - collection_columns.each do |column|
                   td class=(css_for 'collection-table-td', "ez-t-#{column.name}")
                     = record.public_send(column.name)

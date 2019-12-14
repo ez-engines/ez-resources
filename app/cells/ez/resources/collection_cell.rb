@@ -5,8 +5,12 @@ module Ez
         @collection_size ||= model.size
       end
 
-      def resource_name
-        @resource_name ||= options[:resource_name]
+      def header_text
+        "#{resources_name} (#{collection_size})"
+      end
+
+      def resources_name
+        @resources_name ||= options[:resources_name]
       end
 
       def collection_columns

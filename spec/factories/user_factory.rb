@@ -5,7 +5,7 @@ FactoryBot.define do
     sequence(:email) { |n| "test-user-#{n}@ez.test" }
     age { rand(18..65) }
     active { true }
-    gender { ['MALE', 'FEMALE', 'OTHER'].sample  }
+    gender { ['Male', 'Female', 'Other'].sample  }
     notes { FFaker::Lorem.sentence  }
   end
 end

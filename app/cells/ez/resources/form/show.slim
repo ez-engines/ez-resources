@@ -7,7 +7,7 @@
 
     = div_for 'form-container'
       = div_for 'form-inner-container'
-        = simple_form_for model, as: :record do |f|
+        = simple_form_for model, as: :ez_resource do |f|
           - options[:form_fields].each do |field|
             = cell 'ez/resources/field', field, form: f
 

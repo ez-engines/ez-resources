@@ -17,7 +17,10 @@ RSpec.describe Ez::Resources::Manager::Options do
       end
 
       it 'generates defaul attributes' do
-        data, options = described_class.new(controller: controller, config: config).to_attrs
+        instance = described_class.new(controller: controller, config: config)
+        expect(instance.model).to eq User
+
+        data, options = instance.to_attribues
 
         expect(data.size).to eq 2
         expect(data[0]).to be_instance_of User
@@ -28,7 +31,8 @@ RSpec.describe Ez::Resources::Manager::Options do
         expect(data[1].id).to eq user_b.id
         expect(data[1].email).to eq user_b.email
 
-        expect(options[:resource_name]).to eq 'Users'
+        expect(options[:resource_name]).to eq 'User'
+        expect(options[:resources_name]).to eq 'Users'
         expect(options[:new_resource_path]).to eq '/users/new'
         expect(options[:collection_path]).to eq '/users'
 
