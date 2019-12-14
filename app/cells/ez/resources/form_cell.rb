@@ -7,20 +7,16 @@ module Ez
       include ActionView::RecordIdentifier
       include ActionView::Helpers::FormOptionsHelper
 
-      def show
-        render 'show'
-      end
-
       def form_header_label
-        if model.new_record?
-          "#{t('actions.new')} #{options[:resource_name].downcase}"
+        if model.data.new_record?
+          "#{t('actions.new')} #{model.resource_name.downcase}"
         else
-          "#{t('actions.edit')} #{model.public_send(options[:resource_label])} #{options[:resource_name].downcase}"
+          "#{t('actions.edit')} #{model.data.public_send(model.resource_label)} #{model.resource_name.downcase}"
         end
       end
 
       def submit_button_text
-        if model.new_record?
+        if model.data.new_record?
           t('actions.create')
         else
           t('actions.update')

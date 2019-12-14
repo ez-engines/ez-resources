@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe 'Edit' do
   subject { page }
 
-  let!(:user) { create(:user) }
+  let!(:user)             { create(:user) }
   let(:random_attributes) { attributes_for(:user) }
 
   it 'render edit form' do
@@ -23,5 +23,17 @@ RSpec.describe 'Edit' do
 
     click_link 'Cancel'
     is_expected.to have_current_path '/users'
+  end
+
+  let(:young_user) { create(:user, age: 13) }
+
+  it 'prevents edit by :can_edit? hooks' do
+    visit "/users/#{young_user.id}/edit"
+
+    is_expected.to have_current_path '/'
+
+    within '.alert' do
+      is_expected.to have_content 'Sorry, but this action is unavailable'
+    end
   end
 end

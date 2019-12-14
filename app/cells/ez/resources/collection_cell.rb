@@ -1,29 +1,34 @@
 module Ez
   module Resources
     class CollectionCell < ApplicationCell
+      delegate :resources_name, :collection_columns, to: :model
+
+      def collection
+        @collection ||= model.data
+      end
+
       def collection_size
-        @collection_size ||= model.size
+        @collection_size ||= collection.size
       end
 
       def header_text
         "#{resources_name} (#{collection_size})"
       end
 
-      def resources_name
-        @resources_name ||= options[:resources_name]
-      end
-
-      def collection_columns
-        @collection_columns ||= options[:collection_columns]
-      end
-
       def edit_link(record)
-        return unless options[:actions].include?(:edit)
+        return unless model.actions.include?(:edit)
+        return unless can_edit?(record)
 
-        link_to t("actions.edit"), "#{options[:collection_path]}/#{record.id}/edit"
+        link_to t("actions.edit"), model.path_for(action: :edit, id: record.id)
       end
 
       def remove_link(record)
+      end
+
+      private
+
+      def can_edit?(record)
+        Manager::Hooks.can?(:can_edit?, model.hooks, record)
       end
     end
   end

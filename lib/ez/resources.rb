@@ -13,5 +13,6 @@ module Ez
 
     BaseError = Class.new(StandardError)
     GuessingError = Class.new(BaseError)
+    UnavailableError = Class.new(BaseError)
   end
 end

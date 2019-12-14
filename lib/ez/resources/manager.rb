@@ -1,6 +1,5 @@
-require 'ez/resources/manager/field'
+require 'ez/resources/manager/dsl'
 require 'ez/resources/manager/config'
-require 'ez/resources/manager/options'
 
 module Ez
   module Resources
@@ -9,17 +8,10 @@ module Ez
 
       def self.included(base)
         base.extend(DSL)
-      end
 
-      module DSL
-        def ez_resource_config
-          @ez_resource_config || Ez::Resources::Manager::Config.new
-        end
-
-        def ez_resource(&block)
-          config = Ez::Resources::Manager::Config.new
-          block.call(config)
-          @ez_resource_config = config
+        base.rescue_from UnavailableError do
+          flash[:alert] = t('messages.unavailable', scope: Ez::Resources.config.i18n_scope)
+          redirect_to '/'
         end
       end
 
@@ -28,7 +20,7 @@ module Ez
       # 2. Edit/Remove hooks?
 
       def index
-        ez_resource_view :collection, *ez_resource_config.to_attribues
+        ez_resource_view :collection, ez_resource_config
       end
 
       # TODO: Later
@@ -36,7 +28,7 @@ module Ez
       end
 
       def new
-        ez_resource_view :form, *ez_resource_config.to_attribues
+        ez_resource_view :form, ez_resource_config
       end
 
       def create
@@ -47,35 +39,37 @@ module Ez
             resource_name: ez_resource_config.resource_name,
             scope:         Ez::Resources.config.i18n_scope)
 
-          redirect_to ez_resource_config.collection_path
+          redirect_to ez_resource_config.path_for(action: :index)
         else
           flash[:alert] = t('messages.invalid',
             resource_name: ez_resource_config.resource_name,
             scope:         Ez::Resources.config.i18n_scope)
 
-          ez_resource_view :form, *ez_resource_config.to_attribues
+          ez_resource_view :form, ez_resource_config
         end
       end
 
       def edit
-        ez_resource_view :form, *ez_resource_config.to_attribues
+        Manager::Hooks.can!(:can_edit?, ez_resource_config.hooks, ez_resource_config.data)
+
+        ez_resource_view :form, ez_resource_config
       end
 
       def update
-        @ez_resource = ez_resource_config.fetch_resource_by_pk
+        @ez_resource = ez_resource_config.data
 
         if @ez_resource.update(ez_resource_params)
           flash[:notice] = t('messages.updated',
             resource_name: ez_resource_config.resource_name,
             scope:         Ez::Resources.config.i18n_scope)
 
-          redirect_to ez_resource_config.collection_path
+          redirect_to ez_resource_config.path_for(action: :index)
         else
           flash[:alert] = t('messages.invalid',
             resource_name: ez_resource_config.resource_name,
             scope:         Ez::Resources.config.i18n_scope)
 
-          ez_resource_view :form, *ez_resource_config.to_attribues
+          ez_resource_view :form, ez_resource_config
         end
       end
 
@@ -90,13 +84,13 @@ module Ez
       end
 
       def ez_resource_params
-        params.require(:ez_resource).permit(self.class.ez_resource_config.form_fields.map(&:name))
+        params.require(:ez_resource).permit(ez_resource_config.form_fields.map(&:name))
       end
 
       def ez_resource_config
-        Options.new(
+        Config.new(
           controller: self,
-          config:     self.class.ez_resource_config,
+          store:      self.class.ez_resource_config_store,
           data:       @ez_resource
         )
       end

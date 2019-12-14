@@ -1,74 +1,45 @@
 require 'rails_helper'
 
 RSpec.describe Ez::Resources::Manager::Config do
-  class DummyController
-    extend Ez::Resources::Manager::DSL
+  describe '#to_attrs' do
+    context 'index' do
+      let(:user_a) { build_stubbed(:user) }
+      let(:user_b) { build_stubbed(:user) }
 
-    ez_resource do |config|
-      config.actions %i[index new create edit update]
-      config.model 'Model'
-      config.resource_name 'Resource Name'
-      config.resource_label :email
+      let(:controller) { instance_double UsersController, controller_name: 'Users', action_name: 'index' }
+      let(:config_store) { Ez::Resources::Manager::ConfigStore.new }
 
-      config.resources_name 'Resources'
+      before do
+        allow(controller).to receive(:url_for).with(action: :new, only_path: true) { '/users/new' }
+        allow(controller).to receive(:url_for).with(action: :index, only_path: true) { '/users' }
+        allow(controller).to receive(:url_for).with(action: :create, only_path: true) { '/users' }
 
-      # config.collection_columns %i[one two]
-
-      config.form_fields do
-        field :id,     type: :integer
-        field :name,   type: :string
-        field :gender, type: :select, collection: %w[Male Female], default: -> { 'Male' }
-        field :age,    type: :integer, default: -> { 18 }
+        allow(User).to receive(:all) { [user_a, user_b] }
       end
-    end
-  end
 
-  let(:controller) { DummyController.new }
+      it 'has default behaviour' do
+        instance = described_class.new(controller: controller, store: config_store)
 
-  let(:cfg) { DummyController.ez_resource_config }
+        expect(instance.data.size).to eq 2
+        expect(instance.data[0]).to be_instance_of User
+        expect(instance.data[0].id).to eq user_a.id
+        expect(instance.data[0].email).to eq user_a.email
 
-  describe '.ez_resource' do
-    it 'DSL' do
-      expect(cfg.actions.size).to eq 5
+        expect(instance.data[1]).to be_instance_of User
+        expect(instance.data[1].id).to eq user_b.id
+        expect(instance.data[1].email).to eq user_b.email
 
-      expect(cfg.model).to eq 'Model'
-      expect(cfg.resource_name).to eq 'Resource Name'
-      expect(cfg.resource_label).to eq :email
-      expect(cfg.resources_name).to eq 'Resources'
-      expect(cfg.form_fields.size).to eq 4
-      expect(cfg.form_fields[0]).to be_instance_of(Ez::Resources::Manager::Field)
-      expect(cfg.form_fields[0].name).to eq :id
-      expect(cfg.form_fields[0].title).to eq 'Id'
-      expect(cfg.form_fields[0].type).to eq  :integer
-      expect(cfg.form_fields[0].default).to eq nil
-      expect(cfg.form_fields[0].collection).to eq []
+        expect(instance.actions).to eq %i[index show new create edit update destroy]
+        expect(instance.model).to eq User
+        expect(instance.resource_name).to eq 'User'
+        expect(instance.resources_name).to eq 'Users'
 
-      expect(cfg.form_fields[1]).to be_instance_of(Ez::Resources::Manager::Field)
-      expect(cfg.form_fields[1].name).to eq :name
-      expect(cfg.form_fields[1].title).to eq 'Name'
-      expect(cfg.form_fields[1].type).to eq  :string
-      expect(cfg.form_fields[1].default).to eq nil
-      expect(cfg.form_fields[1].collection).to eq []
+        expect(instance.resource_label).to eq :id
+        expect(instance.hooks).to eq []
 
-      expect(cfg.form_fields[2]).to be_instance_of(Ez::Resources::Manager::Field)
-      expect(cfg.form_fields[2].name).to eq :gender
-      expect(cfg.form_fields[2].title).to eq 'Gender'
-      expect(cfg.form_fields[2].type).to eq  :select
-      expect(cfg.form_fields[2].default.call).to eq 'Male'
-      expect(cfg.form_fields[2].collection).to eq ['Male', 'Female']
-
-      expect(cfg.form_fields[3]).to be_instance_of(Ez::Resources::Manager::Field)
-      expect(cfg.form_fields[3].name).to eq :age
-      expect(cfg.form_fields[3].title).to eq 'Age'
-      expect(cfg.form_fields[3].type).to eq  :integer
-      expect(cfg.form_fields[3].default.call).to eq 18
-      expect(cfg.form_fields[3].collection).to eq []
-    end
-  end
-
-  describe '.ez_resource_config' do
-    it 'ez_resource_config' do
-      expect(DummyController.ez_resource_config).to be_instance_of(Ez::Resources::Manager::Config)
+        expect(instance.collection_columns.size).to eq 5
+        expect(instance.form_fields).to eq instance.collection_columns
+      end
     end
   end
 end

@@ -8,5 +8,9 @@ class UsersController < ApplicationController
       field :age,    type: :integer, default: -> { 18 }, required: false
       field :gender, type: :select,  default: -> { 'Other' }, collection: %w(Male Female Other)
     end
+
+    config.hooks do
+      add :can_edit?, ->(user) { user.age >= 18 }
+    end
   end
 end

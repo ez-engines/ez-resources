@@ -7,10 +7,10 @@
 
     = div_for 'form-container'
       = div_for 'form-inner-container'
-        = simple_form_for model, as: :ez_resource do |f|
-          - options[:form_fields].each do |field|
-            = cell 'ez/resources/field', field, form: f, new_record?: model.new_record?
+        = simple_form_for model.data, as: :ez_resource do |f|
+          - model.form_fields.each do |field|
+            = cell 'ez/resources/field', field, form: f, new_record?: model.data.new_record?
 
           = div_for 'form-actions'
             = f.submit submit_button_text, class: css_for('actions-submit-button')
-            = link_to t('actions.cancel'), options[:collection_path]
+            = link_to t('actions.cancel'), model.path_for(action: :index)

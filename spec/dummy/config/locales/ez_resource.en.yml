@@ -12,3 +12,4 @@ en:
       updated: "%{resource_name} was successfully updated"
       removed: "%{resource_name} was successfully removed"
       invalid: "Invalid %{resource_name} attributes. Please, check the errors below"
+      unavailable: Sorry, but this action is unavailable
