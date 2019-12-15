@@ -9,6 +9,13 @@ class UsersController < ApplicationController
       field :gender, type: :select,  default: -> { 'Other' }, collection: %w(Male Female Other)
     end
 
+    config.collection_columns do
+      column :email
+      column :active, type: :boolean
+      column :age
+      column :gender, type: :association, getter: ->(user) { user.gender.upcase }
+    end
+
     config.hooks do
       add :can_edit?, ->(user) { user.age >= 18 }
     end

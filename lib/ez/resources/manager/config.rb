@@ -4,10 +4,10 @@ module Ez
       class Config
         DEFAULT_ACTIONS = %i[index show new create edit update destroy].freeze
 
-        def initialize(controller:, store:, data: nil)
+        def initialize(controller:, dsl_config:, data: nil)
           @controller = controller
-          @store     = store
-          @data      = data
+          @dsl_config = dsl_config
+          @data       = data
         end
 
         def data
@@ -22,21 +22,21 @@ module Ez
         end
 
         def model
-          @model ||= store.model || controller_name.classify.constantize
+          @model ||= dsl_config.model || controller_name.classify.constantize
         rescue NameError
           raise GuessingError, "Ez::Resources tried to guess model name as #{controller_name.classify} but constant is missing. You can define model class explicitly with :model options"
         end
 
         def actions
-          @actions ||= store.actions || DEFAULT_ACTIONS
+          @actions ||= dsl_config.actions || DEFAULT_ACTIONS
         end
 
         def hooks
-          @hooks ||= store.hooks || []
+          @hooks ||= dsl_config.hooks || []
         end
 
         def resource_label
-          @resource_label ||= store.resource_label || :id
+          @resource_label ||= dsl_config.resource_label || :id
         end
 
         def resource_name
@@ -44,11 +44,11 @@ module Ez
         end
 
         def resources_name
-          @resources_name ||= store.resources_name || resource_name.pluralize
+          @resources_name ||= dsl_config.resources_name || resource_name.pluralize
         end
 
         def collection_columns
-          @collection_columns ||= model.columns.map do |column|
+          @collection_columns ||= dsl_config.collection_columns || model.columns.map do |column|
             Ez::Resources::Manager::Field.new(
               name:  column.name,
               title: column.name.to_s.humanize,
@@ -58,7 +58,7 @@ module Ez
         end
 
         def form_fields
-          @form_fields ||= store.form_fields || collection_columns || []
+          @form_fields ||= dsl_config.form_fields || collection_columns || []
         end
 
         def path_for(action:, id: nil)
@@ -71,10 +71,14 @@ module Ez
 
         private
 
-        attr_reader :controller, :store
+        attr_reader :controller, :dsl_config
 
         def collection
-          @collection ||= model.all
+          @collection ||= if dsl_config.collection_query
+            dsl_config.collection_query.call(model)
+          else
+            model.all
+          end
         end
 
         def new_resource

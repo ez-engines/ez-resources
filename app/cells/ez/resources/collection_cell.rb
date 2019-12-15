@@ -15,6 +15,14 @@ module Ez
         "#{resources_name} (#{collection_size})"
       end
 
+      def record_column_value(record, column)
+        if column.type == :association
+          column.getter.call(record)
+        else
+          record.public_send(column.name)
+        end
+      end
+
       def edit_link(record)
         return unless model.actions.include?(:edit)
         return unless can_edit?(record)

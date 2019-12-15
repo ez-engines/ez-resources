@@ -90,7 +90,7 @@ module Ez
       def ez_resource_config
         Config.new(
           controller: self,
-          store:      self.class.ez_resource_config_store,
+          dsl_config: self.class.ez_resource_config_store,
           data:       @ez_resource
         )
       end

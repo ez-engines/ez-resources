@@ -15,6 +15,8 @@ module Ez
         def field(name, options = {})
           @fields << Field.new(name: name, **options)
         end
+
+        alias_method :column, :field
       end
     end
   end

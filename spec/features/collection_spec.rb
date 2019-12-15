@@ -22,29 +22,54 @@ RSpec.describe 'Collection' do
     end
 
     # Has table headers
-    %w[email age active notes].each do |col_name|
+    %w[email age active gender].each do |col_name|
       within "th#ez-t-#{col_name}" do
         is_expected.to have_content(col_name.humanize)
       end
     end
 
     # Has table content
-    [user_a, user_b].each do |user|
-      within "tr#users-#{user.id} > td.ez-resources-collection-table-td-actions" do
-        if user == user_a
-          is_expected.to have_link 'Edit', href: "/users/#{user.id}/edit"
-        else
-          is_expected.not_to have_link 'Edit', href: "/users/#{user.id}/edit"
-        end
 
-        # is_expected.to have_link 'Remove', href: "users/#{user.id}"
-      end
+    # User A
+    within "tr#users-#{user_a.id} > td.ez-resources-collection-table-td-actions" do
+      is_expected.to have_link 'Edit', href: "/users/#{user_a.id}/edit"
+    end
 
-      %w[email age active notes].each do |col_name|
-        within "tr#users-#{user.id} > td.ez-t-#{col_name}" do
-          is_expected.to have_content(user.public_send(col_name))
-        end
-      end
+    within "tr#users-#{user_a.id} > td.ez-t-email" do
+      is_expected.to have_content user_a.email
+    end
+
+    within "tr#users-#{user_a.id} > td.ez-t-active" do
+      is_expected.to have_content user_a.active
+    end
+
+    within "tr#users-#{user_a.id} > td.ez-t-age" do
+      is_expected.to have_content user_a.age
+    end
+
+    within "tr#users-#{user_a.id} > td.ez-t-gender" do
+      is_expected.to have_content user_a.gender.upcase
+    end
+
+    # User B
+    within "tr#users-#{user_b.id} > td.ez-resources-collection-table-td-actions" do
+      is_expected.not_to have_link 'Edit', href: "/users/#{user_b.id}/edit"
+    end
+
+    within "tr#users-#{user_b.id} > td.ez-t-email" do
+      is_expected.to have_content user_b.email
+    end
+
+    within "tr#users-#{user_b.id} > td.ez-t-active" do
+      is_expected.to have_content user_b.active
+    end
+
+    within "tr#users-#{user_b.id} > td.ez-t-age" do
+      is_expected.to have_content user_b.age
+    end
+
+    within "tr#users-#{user_b.id} > td.ez-t-gender" do
+      is_expected.to have_content user_b.gender.upcase
     end
   end
 end

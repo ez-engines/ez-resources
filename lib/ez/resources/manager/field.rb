@@ -2,7 +2,7 @@ module Ez
   module Resources
     module Manager
       class Field
-        attr_reader :name, :title, :type, :required, :default, :suffix, :min, :collection, :wrapper, :options
+        attr_reader :name, :title, :type, :required, :default, :suffix, :min, :collection, :wrapper, :options, :getter
 
         def initialize(options = {})
           @name       = options.delete(:name)
@@ -14,6 +14,7 @@ module Ez
           @suffix     = options.delete(:suffix)
           @min        = options.delete(:min)
           @wrapper    = options.delete(:wrapper)
+          @getter     = options.delete(:getter)
           @options    = options
         end
 

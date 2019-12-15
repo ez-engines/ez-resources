@@ -22,7 +22,7 @@
               tr class=(css_for 'collection-table-tr') id="#{resources_name.downcase}-#{record.id}"
                 - collection_columns.each do |column|
                   td class=(css_for 'collection-table-td', "ez-t-#{column.name}")
-                    = record.public_send(column.name)
+                    = record_column_value(record, column)
                 td class=(css_for 'collection-table-td-actions')
                    = edit_link(record)
                    = remove_link(record)

@@ -13,6 +13,10 @@ module Ez
           value ? @model = value : @model
         end
 
+        def collection_query(value = nil)
+          value ? @collection_query = value : @collection_query
+        end
+
         def resource_name(value = nil)
           value ? @resource_name = value : @resource_name
         end
@@ -29,8 +33,12 @@ module Ez
           value ? @new_resource_path = value : @new_resource_path
         end
 
-        def collection_columns(value = nil)
-          value ? @collection_columns = value : @collection_columns
+        def collection_columns(&block)
+          if block_given?
+            @collection_columns = Fields.new(&block).fields
+          else
+            @collection_columns
+          end
         end
 
         def form_fields(&block)
