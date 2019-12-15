@@ -1,7 +1,9 @@
 module Ez
   module Resources
     class CollectionCell < ApplicationCell
-      delegate :resources_name, :collection_columns, to: :model
+      include Pagy::Frontend
+
+      delegate :resources_name, :collection_columns, :paginator, to: :model
 
       def collection
         @collection ||= model.data
@@ -31,6 +33,14 @@ module Ez
       end
 
       def remove_link(record)
+      end
+
+      def pagination
+        if Ez::Resources.config.pagination_method
+          instance_exec paginator, &Ez::Resources.config.pagination_method
+        else
+          pagy_nav(paginator)
+        end
       end
 
       private

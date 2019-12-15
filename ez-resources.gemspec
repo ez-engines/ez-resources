@@ -30,6 +30,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'cells-rails', '~> 0.1.0'
   s.add_dependency 'cells-slim',  '~> 0.0.6'
   s.add_dependency 'simple_form', '>= 5.0.1'
+  s.add_dependency 'pagy',        '~> 3.5'
 
   s.add_development_dependency 'bundler', '~> 2.0'
   s.add_development_dependency 'capybara'

@@ -13,10 +13,10 @@
       = div_for 'collection-inner-container'
         table class=(css_for 'collection-table')
           thead class=(css_for 'collection-table-thead')
-            tr class=(css_for 'collection-table-tr')
+            tr class=(css_for 'collection-table-thead-tr')
               - collection_columns.each do |column|
-                th class=(css_for 'collection-table-th') id=("ez-t-#{column.name}") = column.title
-              th class=(css_for 'collection-table-th') colspan="2"
+                th class=(css_for 'collection-table-thead-th') id=("ez-t-#{column.name}") = column.title
+              th class=(css_for 'collection-table-thead-th') colspan="2" style="width: 1%"
           tbody class=(css_for 'collection-table-tbody')
             - collection.each do |record|
               tr class=(css_for 'collection-table-tr') id="#{resources_name.downcase}-#{record.id}"
@@ -27,5 +27,5 @@
                    = edit_link(record)
                    = remove_link(record)
 
-        / TODO: Add pagination
-        / == paginate(pager)
+        - if paginator && paginator.count > 20
+          == pagination

@@ -5,12 +5,13 @@ RSpec.describe Ez::Resources::Manager::ConfigStore do
     extend Ez::Resources::Manager::DSL
 
     ez_resource do |config|
-      config.actions %i[index new create edit update]
-      config.model 'Model'
-      config.collection_query ->(model) { "#{model} query" }
-      config.resource_name 'Resource Name'
-      config.resource_label :email
-      config.resources_name 'Resources'
+      config.actions = %i[index new create edit update]
+      config.model = 'Model'
+      config.collection_query = ->(model) { "#{model} query" }
+      config.paginate_collection = false
+      config.resource_name = 'Resource Name'
+      config.resource_label = :email
+      config.resources_name = 'Resources'
 
       config.collection_columns do
         column :id,     type: :integer
@@ -47,6 +48,10 @@ RSpec.describe Ez::Resources::Manager::ConfigStore do
 
     it 'has collection_query' do
       expect(cfg.collection_query.call(cfg.model)).to eq 'Model query'
+    end
+
+    it 'has paginate_collection' do
+      expect(cfg.paginate_collection).to eq false
     end
 
     it 'build resource_name' do

@@ -1,11 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe Ez::Resources::Manager::Config do
-  let(:controller) { instance_double UsersController, controller_name: 'Users', action_name: action_name }
+  let(:controller) { instance_double UsersController, controller_name: 'Users', action_name: action_name, params: {} }
   let(:dsl_store)  { Ez::Resources::Manager::ConfigStore.new }
 
-  let(:user_a) { build_stubbed(:user) }
-  let(:user_b) { build_stubbed(:user) }
+  let!(:user_a) { create(:user) }
+  let!(:user_b) { create(:user) }
 
   before do
     allow(controller).to receive(:url_for).with(action: :new, only_path: true) { '/users/new' }
@@ -16,8 +16,6 @@ RSpec.describe Ez::Resources::Manager::Config do
   context 'default behaviour' do
     context 'index' do
       let(:action_name) { 'index' }
-
-      before { allow(User).to receive(:all) { [user_a, user_b] } }
 
       let(:cfg) { described_class.new(controller: controller, dsl_config: dsl_store) }
 
@@ -85,16 +83,9 @@ RSpec.describe Ez::Resources::Manager::Config do
   end
 
   context 'with dsl configuration' do
-    let(:dsl) do
-      proc do |config|
-        config.collection_query ->(model) { model.preload(:posts) }
-      end
-    end
-
     before do
-      allow(User).to receive(:preload).with(:posts) { [user_a] }
-
-      dsl_store.instance_eval(&dsl)
+      dsl_store.collection_query = ->(model) { model.preload(:posts) }
+      dsl_store.paginate_collection = false
     end
 
     context 'index' do
@@ -104,7 +95,8 @@ RSpec.describe Ez::Resources::Manager::Config do
 
       describe '#data' do
         it 'call custom labmda with model as first argument' do
-          expect(cfg.data).to eq([user_a])
+          expect(cfg.data).to eq([user_a, user_b])
+          expect(cfg.paginator).to eq nil
         end
       end
     end

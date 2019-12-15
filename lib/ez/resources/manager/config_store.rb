@@ -5,33 +5,8 @@ module Ez
   module Resources
     module Manager
       class ConfigStore
-        def actions(value = nil)
-          value ? @actions = value : @actions
-        end
-
-        def model(value = nil)
-          value ? @model = value : @model
-        end
-
-        def collection_query(value = nil)
-          value ? @collection_query = value : @collection_query
-        end
-
-        def resource_name(value = nil)
-          value ? @resource_name = value : @resource_name
-        end
-
-        def resource_label(value = nil)
-          value ? @resource_label = value : @resource_label
-        end
-
-        def resources_name(value = nil)
-          value ? @resources_name = value : @resources_name
-        end
-
-        def new_resource_path(value = nil)
-          value ? @new_resource_path = value : @new_resource_path
-        end
+        attr_accessor :actions, :model, :paginate_collection, :resource_name, :resource_label, :resources_name,
+          :collection_columns, :collection_query
 
         def collection_columns(&block)
           if block_given?

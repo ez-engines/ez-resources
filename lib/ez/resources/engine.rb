@@ -1,6 +1,7 @@
 require 'cells-rails'
 require 'cells-slim'
 require 'simple_form'
+require 'pagy'
 
 module Ez
   module Resources
