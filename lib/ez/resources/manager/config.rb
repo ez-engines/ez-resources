@@ -52,7 +52,7 @@ module Ez
         end
 
         def paginate_collection?
-          @paginate_collection ||= !(dsl_config.paginate_collection == false)
+          @paginate_collection ||= dsl_config.paginate_collection != false
         end
 
         def collection_columns
@@ -110,7 +110,6 @@ module Ez
         def resource
           @resource ||= model.find(controller.params[:id])
         end
-
 
         def controller_name
           @controller_name ||= controller.controller_name
