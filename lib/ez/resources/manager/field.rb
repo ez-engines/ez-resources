@@ -2,20 +2,22 @@ module Ez
   module Resources
     module Manager
       class Field
-        attr_reader :name, :title, :type, :required, :default, :suffix, :min, :collection, :wrapper, :options, :getter
+        attr_reader :name, :title, :type, :required, :default, :suffix, :min, :collection, :wrapper, :options, :getter,
+          :search_suffix
 
         def initialize(options = {})
-          @name       = options.delete(:name)
-          @title      = options.delete(:title)      || @name.to_s.capitalize
-          @type       = options.delete(:type)       || :string
-          @required   = options.delete(:required)   || true
-          @collection = options.delete(:collection) || []
-          @default    = options.delete(:default)
-          @suffix     = options.delete(:suffix)
-          @min        = options.delete(:min)
-          @wrapper    = options.delete(:wrapper)
-          @getter     = options.delete(:getter)
-          @options    = options
+          @name          = options.delete(:name)
+          @title         = options.delete(:title)      || @name.to_s.capitalize
+          @type          = options.delete(:type)       || :string
+          @required      = options.delete(:required)   || true
+          @collection    = options.delete(:collection) || []
+          @default       = options.delete(:default)
+          @suffix        = options.delete(:suffix)
+          @min           = options.delete(:min)
+          @wrapper       = options.delete(:wrapper)
+          @getter        = options.delete(:getter)
+          @search_suffix = options.delete(:search_suffix) || :cont
+          @options       = options
         end
 
         alias required? required

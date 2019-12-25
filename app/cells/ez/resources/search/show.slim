@@ -1,0 +1,15 @@
+= div_for 'collection-search-container'
+  = div_for 'collection-search-panel'
+    h4 = t('phrases.search_and_filter')
+
+    = div_for 'collection-search-panel-form'
+      = simple_form_for model.search, url: model.path_for(action: :index), method: :get do |f|
+        - model.collection_columns.each do |field|
+          - if field.type == :string
+            = div_for 'collection-search-panel-field'
+              = f.input :"#{field.name}_#{field.search_suffix}", required: false, label: field_label(field), as: field.type
+
+        = f.submit t('actions.apply'), class: css_for('collection-search-panel-submit-button')
+
+        - if model.params[:q]
+          = link_to t('actions.reset'), model.path_for(action: :index), class: css_for('collection-search-panel-reset-link')

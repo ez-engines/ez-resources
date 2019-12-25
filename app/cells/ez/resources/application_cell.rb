@@ -7,6 +7,14 @@ module Ez
 
       CSS_SCOPE = 'ez-resources'
 
+      def self.form
+        include ActionView::Helpers::FormHelper
+        include ActionView::Helpers::DateHelper
+        include SimpleForm::ActionViewExtensions::FormHelper
+        include ActionView::RecordIdentifier
+        include ActionView::Helpers::FormOptionsHelper
+      end
+
       def div_for(item, extra = nil, &block)
         content_tag :div, class: css_for(item, extra), &block
       end

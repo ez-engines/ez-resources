@@ -6,7 +6,7 @@ module Ez
 
         DEFAULT_ACTIONS = %i[index show new create edit update destroy].freeze
 
-        attr_reader :paginator
+        attr_reader :paginator, :search
 
         def initialize(controller:, dsl_config:, data: nil)
           @controller = controller
@@ -18,11 +18,16 @@ module Ez
           @data ||= case controller.action_name
           when 'index'  then collection
           when 'new'    then new_resource
+          when 'show'   then resource
           when 'edit'   then resource
           when 'update' then resource
           else
-            raise "Invalid action [#{controller.action_name}]"
+            raise ConfigurationError, "Invalid action #{controller.action_name}"
           end
+        end
+
+        def total_count
+          @total_count ||= model.count
         end
 
         def model
@@ -55,6 +60,10 @@ module Ez
           @paginate_collection ||= dsl_config.paginate_collection != false
         end
 
+        def collection_search?
+          @collection_search ||= dsl_config.collection_search != false
+        end
+
         def collection_columns
           @collection_columns ||= dsl_config.collection_columns || model.columns.map do |column|
             Ez::Resources::Manager::Field.new(
@@ -77,13 +86,16 @@ module Ez
           end
         end
 
+        def params
+          @params ||= controller.params
+        end
+
         private
 
         attr_reader :controller, :dsl_config
 
         def collection
           return paginated_collection if paginate_collection?
-
 
           @collection ||= if dsl_config.collection_query
             dsl_config.collection_query.call(model)
@@ -96,7 +108,8 @@ module Ez
           @paginated_collection ||= if dsl_config.collection_query
             pagy, paginated_collection = pagy dsl_config.collection_query.call(model)
           else
-            pagy, paginated_collection = pagy model.all
+            @search = model.ransack(params[:q])
+            pagy, paginated_collection = pagy search.result
           end
 
           @paginator = pagy
@@ -113,10 +126,6 @@ module Ez
 
         def controller_name
           @controller_name ||= controller.controller_name
-        end
-
-        def params
-          @params ||= controller.params
         end
       end
     end

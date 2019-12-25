@@ -6,18 +6,14 @@ RSpec.describe 'Collection' do
   let!(:user_a) { create(:user) }
   let!(:user_b) { create(:user, age: 17) }
 
-  def ez_divs(divs)
-    divs.split(', ').map { |div| ".ez-resources-#{div}" }.join(' > ')
-  end
-
   it 'render collection table' do
     visit '/users'
 
-    within ez_divs('container, inner-container, top-container, header-container, header-inner-container') do
-      is_expected.to have_content 'Users (2)'
+    within '.ez-resources-collection-header-container' do
+      is_expected.to have_content 'Users'
     end
 
-    within ez_divs('container, inner-container, top-container, actions-container, actions-inner-container') do
+    within '.ez-resources-collection-actions-container' do
       is_expected.to have_link 'Add', href: '/users/new'
     end
 

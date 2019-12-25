@@ -1,11 +1,7 @@
 module Ez
   module Resources
     class FormCell < ApplicationCell
-      include ActionView::Helpers::FormHelper
-      include ActionView::Helpers::DateHelper
-      include SimpleForm::ActionViewExtensions::FormHelper
-      include ActionView::RecordIdentifier
-      include ActionView::Helpers::FormOptionsHelper
+      form
 
       def form_header_label
         if model.data.new_record?

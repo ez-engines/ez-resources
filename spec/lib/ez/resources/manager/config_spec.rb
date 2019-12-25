@@ -79,6 +79,18 @@ RSpec.describe Ez::Resources::Manager::Config do
           expect(cfg.form_fields).to eq cfg.collection_columns
         end
       end
+
+      describe '#paginate_collection?' do
+        it 'true by default' do
+          expect(cfg.paginate_collection?).to eq true
+        end
+      end
+
+      describe '#collection_search?' do
+        it 'true by default' do
+          expect(cfg.collection_search?).to eq true
+        end
+      end
     end
   end
 
