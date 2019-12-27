@@ -7,8 +7,7 @@
 
         = div_for 'collection-actions-container'
           = div_for 'actions-inner-container'
-            - if model.actions.include?(:new)
-              = link_to t('actions.add'), model.path_for(action: :new), class: css_for('actions-new-link')
+            = new_link
 
       = div_for 'collection-table-container'
         table class=(css_for 'collection-table')
@@ -19,7 +18,7 @@
               th class=(css_for 'collection-table-thead-th') colspan="2" style="width: 1%"
           tbody class=(css_for 'collection-table-tbody')
             - collection.each do |record|
-              tr class=(css_for 'collection-table-tr') id="#{resources_name.downcase}-#{record.id}" data-link="#{ model.path_for(action: :edit, id: record.id) }"
+              = record_tr record do
                 - collection_columns.each do |column|
                   td class=(css_for 'collection-table-td', "ez-t-#{column.name}")
                     = record_column_value(record, column)

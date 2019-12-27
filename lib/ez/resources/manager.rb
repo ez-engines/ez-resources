@@ -10,16 +10,21 @@ module Ez
         base.extend(DSL)
 
         base.rescue_from UnavailableError do
-          flash[:alert] = t('messages.unavailable', scope: Ez::Resources.config.i18n_scope)
-          redirect_to '/'
+          if Ez::Resources.config.ui_failed_hook
+            instance_exec(&Ez::Resources.config.ui_failed_hook)
+          else
+            flash[:alert] = t('messages.unavailable', scope: Ez::Resources.config.i18n_scope)
+            redirect_to '/'
+          end
         end
       end
 
       # TODO configurabe:
       # 1. Collection method of .all or order
-      # 2. Edit/Remove hooks?
 
       def index
+        Manager::Hooks.can!(:can_list?, ez_resource_config)
+
         ez_resource_view :collection, ez_resource_config
       end
 
@@ -28,10 +33,14 @@ module Ez
       end
 
       def new
+        Manager::Hooks.can!(:can_create?, ez_resource_config)
+
         ez_resource_view :form, ez_resource_config
       end
 
       def create
+        Manager::Hooks.can!(:can_create?, ez_resource_config)
+
         @ez_resource = ez_resource_config.model.new(ez_resource_params)
 
         if @ez_resource.save
@@ -50,12 +59,14 @@ module Ez
       end
 
       def edit
-        Manager::Hooks.can!(:can_edit?, ez_resource_config.hooks, ez_resource_config.data)
+        Manager::Hooks.can!(:can_update?, ez_resource_config, ez_resource_config.data)
 
         ez_resource_view :form, ez_resource_config
       end
 
       def update
+        Manager::Hooks.can!(:can_update?, ez_resource_config, ez_resource_config.data)
+
         @ez_resource = ez_resource_config.data
 
         if @ez_resource.update(ez_resource_params)

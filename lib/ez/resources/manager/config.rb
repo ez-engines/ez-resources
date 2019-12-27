@@ -6,7 +6,7 @@ module Ez
 
         DEFAULT_ACTIONS = %i[index show new create edit update destroy].freeze
 
-        attr_reader :paginator, :search
+        attr_reader :paginator, :search, :controller
 
         def initialize(controller:, dsl_config:, data: nil)
           @controller = controller
@@ -92,7 +92,7 @@ module Ez
 
         private
 
-        attr_reader :controller, :dsl_config
+        attr_reader :dsl_config
 
         def collection
           return paginated_collection if paginate_collection?

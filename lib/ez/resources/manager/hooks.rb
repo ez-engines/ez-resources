@@ -6,18 +6,17 @@ module Ez
       class Hooks
         attr_reader :hooks
 
-        def self.can!(name, hooks = [], *args)
-          return true if hooks.empty?
-
-          return true if hooks.select { |h| h.name == name }.map { |h| h.callback.call(*args) }.all?(true)
+        def self.can!(name, config, data = nil)
+          return true if config.hooks.empty?
+          return true if config.hooks.select { |h| h.name == name }.map { |h| h.callback.call(config.controller, data) }.all?(true)
 
           raise UnavailableError, "Negative #{name}"
         end
 
-        def self.can?(name, hooks = [], *args)
-          return true if hooks.empty?
+        def self.can?(name, config, data = nil)
+          return true if config.hooks.empty?
 
-          hooks.select { |h| h.name == name }.map { |h| h.callback.call(*args) }.all?(true)
+          config.hooks.select { |h| h.name == name }.map { |h| h.callback.call(config.controller, data) }.all?(true)
         end
 
         def initialize(&block)

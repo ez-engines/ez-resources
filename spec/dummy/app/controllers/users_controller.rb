@@ -17,7 +17,7 @@ class UsersController < ApplicationController
     end
 
     config.hooks do
-      add :can_edit?, ->(user) { user.age >= 18 }
+      add :can_update?, proc { |ctx, user| user.age >= 18 }
     end
   end
 end
