@@ -30,6 +30,13 @@ module Ez
 
       # TODO: Later
       def show
+        Manager::Hooks.can!(:can_read?, ez_resource_config)
+
+        if ez_resource_config.show_action_renders_form?
+          ez_resource_view :form, ez_resource_config
+        else
+          # TODO render show cell
+        end
       end
 
       def new

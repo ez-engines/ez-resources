@@ -40,6 +40,10 @@ module Ez
           @actions ||= dsl_config.actions || DEFAULT_ACTIONS
         end
 
+        def show_action_renders_form?
+          @show_action_renders_form ||= dsl_config.show_action_renders_form
+        end
+
         def hooks
           @hooks ||= dsl_config.hooks || []
         end

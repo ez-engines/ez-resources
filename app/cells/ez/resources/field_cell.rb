@@ -23,6 +23,7 @@ module Ez
           collection:      model.collection,
           include_blank:   model.required?,
           required:        model.required?,
+          readonly:        options[:readonly],
           checked_value:   true.to_s,
           unchecked_value: false.to_s,
           wrapper:         model.wrapper,

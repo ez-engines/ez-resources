@@ -24,8 +24,8 @@ module Ez
       end
 
       def record_tr(record, &block)
-        if Manager::Hooks.can?(:can_update?, model, record)
-          content_tag :tr, class: css_for('collection-table-tr'), id: "#{resources_name.downcase}-#{record.id}", data: { link: "#{ model.path_for(action: :edit, id: record.id) }" }, &block
+        if model.actions.include?(:show) && Manager::Hooks.can?(:can_read?, model, record)
+          content_tag :tr, class: css_for('collection-table-tr'), id: "#{resources_name.downcase}-#{record.id}", data: { link: "#{ model.path_for(action: :show, id: record.id) }" }, &block
         else
           content_tag :tr, class: css_for('collection-table-tr'), id: "#{resources_name.downcase}-#{record.id}", &block
         end
@@ -38,11 +38,18 @@ module Ez
         link_to t('actions.add'), model.path_for(action: :new), class: css_for('actions-new-link')
       end
 
+      def show_link(record)
+        return unless model.actions.include?(:show)
+        return unless Manager::Hooks.can?(:can_read?, model, record)
+
+        link_to t('actions.show'), model.path_for(action: :show, id: record.id)
+      end
+
       def edit_link(record)
         return unless model.actions.include?(:edit)
-        return unless Manager::Hooks.can?(:can_update?, model, record)
+        return unless Manager::Hooks.can?(:can_read?, model, record)
 
-        link_to t("actions.edit"), model.path_for(action: :edit, id: record.id)
+        link_to t('actions.edit'), model.path_for(action: :edit, id: record.id)
       end
 
       def remove_link(record)

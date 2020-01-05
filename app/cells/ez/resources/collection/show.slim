@@ -23,8 +23,9 @@
                   td class=(css_for 'collection-table-td', "ez-t-#{column.name}")
                     = record_column_value(record, column)
                 td class=(css_for 'collection-table-td-actions')
-                   = edit_link(record)
-                   = remove_link(record)
+                  = show_link(record)
+                  = edit_link(record)
+                  = remove_link(record)
 
         - if paginator && paginator.count > 20
           == pagination

@@ -1,6 +1,7 @@
 en:
   ez_resources:
     actions:
+      show: Show
       add: Add
       new: New
       create: Create

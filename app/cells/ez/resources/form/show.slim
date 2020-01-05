@@ -5,10 +5,12 @@
         h2 class=(css_for('header-label')) = form_header_label
 
     = div_for 'form-inner-container'
-      = simple_form_for model.data, as: :ez_resource do |f|
+      = simple_form_for model.data, as: :ez_resource, html: { readonly: readonly? } do |f|
         - model.form_fields.each do |field|
-          = cell 'ez/resources/field', field, form: f, new_record?: model.data.new_record?
+          = cell 'ez/resources/field', field, form: f, new_record?: model.data.new_record?, readonly: readonly?
 
         = div_for 'form-actions'
-          = f.submit submit_button_text, class: css_for('actions-submit-button')
+          - unless readonly?
+            = f.submit submit_button_text, class: css_for('actions-submit-button')
+
           = link_to t('actions.cancel'), model.path_for(action: :index)

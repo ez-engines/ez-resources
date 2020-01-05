@@ -11,6 +11,11 @@ module Ez
         end
       end
 
+      def readonly?
+        @readonly ||= !Ez::Resources::Manager::Hooks.can?(:can_create?, model, model.data) &&
+          !Ez::Resources::Manager::Hooks.can?(:can_update?, model, model.data)
+      end
+
       def submit_button_text
         if model.data.new_record?
           t('actions.create')
