@@ -11,9 +11,11 @@ class UsersController < ApplicationController
 
     config.collection_columns do
       column :email
-      column :active, type: :boolean
+      column :active,  type: :boolean
       column :age
-      column :gender, type: :association, getter: ->(user) { user.gender.upcase }
+      column :avatar, type: :image, getter: -> (user) { "/avatars/#{user.id}.jpg" }, class: "t-image-tag"
+      column :custom,  type: :custom, builder: ->(user) { "custom #{user.email}" }
+      column :gender,  type: :association, getter: ->(user) { user.gender.upcase }
     end
 
     config.hooks do

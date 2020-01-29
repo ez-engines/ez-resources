@@ -6,7 +6,7 @@ module Ez
     module Manager
       class ConfigStore
         attr_accessor :actions, :model, :paginate_collection, :resource_name, :resource_label, :resources_name,
-          :collection_columns, :collection_query, :collection_search, :show_action_renders_form
+          :collection_columns, :collection_query, :collection_search, :show_action_renders_form, :includes
 
         def collection_columns(&block)
           if block_given?

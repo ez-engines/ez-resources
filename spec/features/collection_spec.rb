@@ -28,7 +28,7 @@ RSpec.describe 'Collection' do
 
     # User A
     within "tr#users-#{user_a.id} > td.ez-resources-collection-table-td-actions" do
-      is_expected.to have_link 'Edit', href: "/users/#{user_a.id}/edit"
+      is_expected.to have_link 'Show', href: "/users/#{user_a.id}"
     end
 
     within "tr#users-#{user_a.id} > td.ez-t-email" do
@@ -37,6 +37,14 @@ RSpec.describe 'Collection' do
 
     within "tr#users-#{user_a.id} > td.ez-t-active" do
       is_expected.to have_content user_a.active
+    end
+
+    within "tr#users-#{user_a.id} > td.ez-t-custom" do
+      is_expected.to have_content "custom #{user_a.email}"
+    end
+
+    within "tr#users-#{user_a.id} > td.ez-t-avatar" do
+      expect(page.find('.t-image-tag')['src']).to have_content "/avatars/#{user_a.id}.jpg"
     end
 
     within "tr#users-#{user_a.id} > td.ez-t-age" do
@@ -48,9 +56,10 @@ RSpec.describe 'Collection' do
     end
 
     # User B
-    within "tr#users-#{user_b.id} > td.ez-resources-collection-table-td-actions" do
-      is_expected.not_to have_link 'Edit', href: "/users/#{user_b.id}/edit"
-    end
+    # debug!
+    # within "tr#users-#{user_b.id} > td.ez-resources-collection-table-td-actions" do
+    #   is_expected.not_to have_link 'Show', href: "/users/#{user_b.id}"
+    # end
 
     within "tr#users-#{user_b.id} > td.ez-t-email" do
       is_expected.to have_content user_b.email
@@ -58,6 +67,14 @@ RSpec.describe 'Collection' do
 
     within "tr#users-#{user_b.id} > td.ez-t-active" do
       is_expected.to have_content user_b.active
+    end
+
+    within "tr#users-#{user_b.id} > td.ez-t-custom" do
+      is_expected.to have_content "custom #{user_b.email}"
+    end
+
+    within "tr#users-#{user_a.id} > td.ez-t-avatar" do
+      expect(page.find('.t-image-tag')['src']).to have_content "/avatars/#{user_a.id}.jpg"
     end
 
     within "tr#users-#{user_b.id} > td.ez-t-age" do

@@ -3,7 +3,7 @@ module Ez
     module Manager
       class Field
         attr_reader :name, :title, :type, :required, :default, :suffix, :min, :collection, :wrapper, :options, :getter,
-          :search_suffix
+          :builder, :search_suffix, :options
 
         def initialize(options = {})
           @name          = options.delete(:name)
@@ -15,9 +15,10 @@ module Ez
           @suffix        = options.delete(:suffix)
           @min           = options.delete(:min)
           @wrapper       = options.delete(:wrapper)
+          @builder       = options.delete(:builder)
           @getter        = options.delete(:getter)
           @search_suffix = options.delete(:search_suffix) || :cont
-          @options       = options
+          @options       = options # use for all other custom options
         end
 
         alias required? required

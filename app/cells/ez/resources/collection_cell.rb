@@ -18,6 +18,12 @@ module Ez
           column.getter.call(record)
         elsif column.type == :boolean
           maybe_use_custom_boolean_presenter(record.public_send(column.name))
+        elsif column.type == :custom
+          column.builder.call(record)
+        elsif column.type == :image
+          url = column.getter.call(record)
+
+          image_tag url, column.options if url
         else
           record.public_send(column.name)
         end

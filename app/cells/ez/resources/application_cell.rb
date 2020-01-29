@@ -10,6 +10,7 @@ module Ez
       def self.form
         include ActionView::Helpers::FormHelper
         include ActionView::Helpers::DateHelper
+        include ActionView::Helpers::AssetTagHelper
         include SimpleForm::ActionViewExtensions::FormHelper
         include ActionView::RecordIdentifier
         include ActionView::Helpers::FormOptionsHelper
