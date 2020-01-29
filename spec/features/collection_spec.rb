@@ -29,6 +29,8 @@ RSpec.describe 'Collection' do
     # User A
     within "tr#users-#{user_a.id} > td.ez-resources-collection-table-td-actions" do
       is_expected.to have_link 'Show', href: "/users/#{user_a.id}"
+      is_expected.to have_link 'Edit', href: "/users/#{user_a.id}/edit"
+      is_expected.to have_link 'Clone', href: "/users/#{user_a.id}/clone"
     end
 
     within "tr#users-#{user_a.id} > td.ez-t-email" do
@@ -56,10 +58,11 @@ RSpec.describe 'Collection' do
     end
 
     # User B
-    # debug!
-    # within "tr#users-#{user_b.id} > td.ez-resources-collection-table-td-actions" do
-    #   is_expected.not_to have_link 'Show', href: "/users/#{user_b.id}"
-    # end
+    within "tr#users-#{user_b.id} > td.ez-resources-collection-table-td-actions" do
+      # why?
+      # is_expected.not_to have_link 'Show', href: "/users/#{user_b.id}"
+      is_expected.to have_link 'Clone', href: "/users/#{user_b.id}/clone"
+    end
 
     within "tr#users-#{user_b.id} > td.ez-t-email" do
       is_expected.to have_content user_b.email

@@ -16,6 +16,14 @@ module Ez
           end
         end
 
+        def collection_actions(&block)
+          if block_given?
+            @collection_actions = Fields.new(&block).actions
+          else
+            @collection_actions
+          end
+        end
+
         def form_fields(&block)
           if block_given?
             @form_fields = Fields.new(&block).fields

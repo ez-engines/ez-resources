@@ -78,6 +78,10 @@ module Ez
           end.reject { |col| Ez::Resources.config.ignore_fields.include?(col.name) }
         end
 
+        def collection_actions
+          @colleciton_actions ||= dsl_config.collection_actions || []
+        end
+
         def form_fields
           @form_fields ||= dsl_config.form_fields || collection_columns || []
         end

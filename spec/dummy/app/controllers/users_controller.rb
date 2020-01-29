@@ -13,9 +13,13 @@ class UsersController < ApplicationController
       column :email
       column :active,  type: :boolean
       column :age
-      column :avatar, type: :image, getter: -> (user) { "/avatars/#{user.id}.jpg" }, class: "t-image-tag"
+      column :avatar,  type: :image, getter: -> (user) { "/avatars/#{user.id}.jpg" }, class: "t-image-tag"
       column :custom,  type: :custom, builder: ->(user) { "custom #{user.email}" }
       column :gender,  type: :association, getter: ->(user) { user.gender.upcase }
+    end
+
+    config.collection_actions do
+      action :clone, proc { |_ctx, user| "/users/#{user.id}/clone" }, method: :post, class: 'custom-action-class'
     end
 
     config.hooks do

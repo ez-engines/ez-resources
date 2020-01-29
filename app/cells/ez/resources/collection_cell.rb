@@ -48,14 +48,14 @@ module Ez
         return unless model.actions.include?(:show)
         return unless Manager::Hooks.can?(:can_read?, model, record)
 
-        link_to t('actions.show'), model.path_for(action: :show, id: record.id)
+        link_to t('actions.show'), model.path_for(action: :show, id: record.id), class: css_for('collection-table-td-action-item')
       end
 
       def edit_link(record)
         return unless model.actions.include?(:edit)
         return unless Manager::Hooks.can?(:can_read?, model, record)
 
-        link_to t('actions.edit'), model.path_for(action: :edit, id: record.id)
+        link_to t('actions.edit'), model.path_for(action: :edit, id: record.id), class: css_for('collection-table-td-action-item')
       end
 
       def remove_link(record)

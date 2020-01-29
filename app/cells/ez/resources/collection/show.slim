@@ -23,9 +23,14 @@
                   td class=(css_for 'collection-table-td', "ez-t-#{column.name}")
                     = record_column_value(record, column)
                 td class=(css_for 'collection-table-td-actions')
-                  = show_link(record)
-                  = edit_link(record)
-                  = remove_link(record)
+                  = div_for 'collection-table-td-actions-container' do
+                    i class=(css_for('collection-table-actions-icon'))
+                    = div_for 'collection-table-td-actions-content' do
+                      = show_link(record)
+                      = edit_link(record)
+                      = remove_link(record)
+                      - model.collection_actions.each do |custom_action|
+                        = link_to t("actions.#{custom_action.name}"), custom_action.builder.call(controller, record), custom_action.options.merge(class: css_for('collection-table-td-action-item'))
 
         - if paginator && paginator.count > 20
           == pagination
