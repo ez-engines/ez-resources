@@ -2,8 +2,21 @@ module Ez
   module Resources
     module Manager
       class Field
-        attr_reader :name, :title, :type, :required, :default, :suffix, :min, :collection, :wrapper, :options, :getter,
-          :builder, :search_suffix, :options
+        attr_reader :name,
+                    :title,
+                    :type,
+                    :required,
+                    :default,
+                    :suffix,
+                    :min,
+                    :collection,
+                    :wrapper,
+                    :options,
+                    :getter,
+                    :builder,
+                    :searchable,
+                    :search_suffix,
+                    :options
 
         def initialize(options = {})
           @name          = options.delete(:name)
@@ -17,6 +30,7 @@ module Ez
           @wrapper       = options.delete(:wrapper)
           @builder       = options.delete(:builder)
           @getter        = options.delete(:getter)
+          @searchable    = options.delete(:searchable)    || true
           @search_suffix = options.delete(:search_suffix) || :cont
           @options       = options # use for all other custom options
         end

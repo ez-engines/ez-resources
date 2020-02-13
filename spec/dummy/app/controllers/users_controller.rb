@@ -16,6 +16,7 @@ class UsersController < ApplicationController
       column :avatar,  type: :image, getter: -> (user) { "/avatars/#{user.id}.jpg" }, class: "t-image-tag"
       column :custom,  type: :custom, builder: ->(user) { "custom #{user.email}" }
       column :gender,  type: :association, getter: ->(user) { user.gender.upcase }
+      column :title,   type: :association, getter: ->(user) { user.posts.pluck(:title) }, association: :posts, title: 'Post title'
     end
 
     config.collection_actions do
