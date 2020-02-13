@@ -33,6 +33,7 @@
                         = link_to t("actions.#{custom_action.name}"), custom_action.builder.call(controller, record), custom_action.options.merge(class: css_for('collection-table-td-action-item'))
 
         - if paginator && paginator.count > 20
+          / WTF: Why '=='?
           == pagination
 
   - if model.collection_search?
