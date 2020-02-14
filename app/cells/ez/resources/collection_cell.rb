@@ -24,6 +24,8 @@ module Ez
           url = column.getter.call(record)
 
           image_tag url, column.options if url
+        elsif column.type == :link
+          link_to record.public_send(column.name), show_link(record)
         else
           record.public_send(column.name)
         end

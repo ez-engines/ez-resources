@@ -6,7 +6,7 @@
       = simple_form_for model.search, url: model.path_for(action: :index), method: :get do |f|
         - model.collection_columns.each do |field|
           - if field.searchable
-            - if %i[association string].include?(field.type)
+            - if SEARCHABLE_FIELDS.include?(field.type)
               = div_for 'collection-search-panel-field'
                 = f.input   field_name(field),
                   label:    field_label(field),

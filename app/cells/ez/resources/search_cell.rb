@@ -1,6 +1,8 @@
 module Ez
   module Resources
     class SearchCell < ApplicationCell
+      SEARCHABLE_FIELDS = %i[string association link]
+
       form
 
       def field_name(field)

@@ -10,6 +10,7 @@ RSpec.describe 'Create' do
     visit '/users/new'
 
     fill_in 'Email', with: random_attrs[:email]
+    fill_in 'Name',  with: random_attrs[:name]
     fill_in 'Age',   with: random_attrs[:age]
     select random_attrs[:gender].humanize, from: 'Gender'
 
@@ -20,9 +21,10 @@ RSpec.describe 'Create' do
       is_expected.to have_content 'User was successfully created'
     end
 
-    expect(created_record.email).to eq random_attrs[:email]
-    expect(created_record.age).to eq random_attrs[:age]
+    expect(created_record.email).to  eq random_attrs[:email]
+    expect(created_record.age).to    eq random_attrs[:age]
     expect(created_record.gender).to eq random_attrs[:gender]
+    expect(created_record.name).to   eq random_attrs[:name]
   end
 
   it 'can catch errors' do
