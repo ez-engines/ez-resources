@@ -25,7 +25,7 @@ module Ez
 
           image_tag url, column.options if url
         elsif column.type == :link
-          link_to record.public_send(column.name), show_link(record)
+          as_a_link(record, column)
         else
           record.public_send(column.name)
         end
@@ -51,6 +51,13 @@ module Ez
         return unless Manager::Hooks.can?(:can_read?, model, record)
 
         link_to t('actions.show'), model.path_for(action: :show, id: record.id), class: css_for('collection-table-td-action-item')
+      end
+
+      def as_a_link(record, column)
+        return unless model.actions.include?(:show)
+        return unless Manager::Hooks.can?(:can_read?, model, record)
+
+        link_to record.public_send(column.name), model.path_for(action: :show, id: record.id)
       end
 
       def edit_link(record)
