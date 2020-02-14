@@ -70,7 +70,7 @@ RSpec.describe Ez::Resources::Manager::Config do
 
       describe '#collection_columns' do
         it 'extracted from model.columns by default' do
-          expect(cfg.collection_columns.size).to eq 5
+          expect(cfg.collection_columns.size).to eq 6
         end
       end
 

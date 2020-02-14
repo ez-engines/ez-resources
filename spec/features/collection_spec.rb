@@ -53,6 +53,10 @@ RSpec.describe 'Collection' do
       is_expected.to have_content user_a.age
     end
 
+    within "tr#users-#{user_a.id} > td.ez-t-name" do
+      is_expected.to have_content user_a.name
+    end
+
     within "tr#users-#{user_a.id} > td.ez-t-gender" do
       is_expected.to have_content user_a.gender.upcase
     end
@@ -74,6 +78,10 @@ RSpec.describe 'Collection' do
 
     within "tr#users-#{user_b.id} > td.ez-t-custom" do
       is_expected.to have_content "custom #{user_b.email}"
+    end
+
+    within "tr#users-#{user_b.id} > td.ez-t-name" do
+      is_expected.to have_content user_b.name
     end
 
     within "tr#users-#{user_a.id} > td.ez-t-avatar" do

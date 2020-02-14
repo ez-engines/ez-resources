@@ -15,8 +15,8 @@ RSpec.describe 'Pagination' do
     within 'nav.pagination' do
       is_expected.to have_content 'Prev'
       is_expected.to have_content '1'
-      is_expected.to have_link '2', href: '/users?page=2'
-      is_expected.to have_link 'Next', href: '/users?page=2'
+      is_expected.to have_link    '2',    href: '/users?page=2'
+      is_expected.to have_link    'Next', href: '/users?page=2'
     end
   end
 end
