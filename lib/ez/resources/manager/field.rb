@@ -30,7 +30,7 @@ module Ez
           @wrapper       = options.delete(:wrapper)
           @builder       = options.delete(:builder)
           @getter        = options.delete(:getter)
-          @searchable    = options.delete(:searchable)    || true
+          @searchable    = options.delete(:searchable) != false
           @search_suffix = options.delete(:search_suffix) || :cont
           @options       = options # use for all other custom options
         end
