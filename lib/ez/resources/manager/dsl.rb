@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'ez/resources/manager/config_store'
 
 module Ez

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Ez::Resources::Manager::ConfigStore do
@@ -75,8 +77,8 @@ RSpec.describe Ez::Resources::Manager::ConfigStore do
       expect(cfg.hooks.size).to eq 1
       expect(cfg.hooks[0].name).to eq :can_edit
       expect(cfg.hooks[0].callback).to be_present
-      expect(cfg.hooks[0].callback.call({age: 21})).to eq true
-      expect(cfg.hooks[0].callback.call({age: 16})).to eq false
+      expect(cfg.hooks[0].callback.call({ age: 21 })).to eq true
+      expect(cfg.hooks[0].callback.call({ age: 16 })).to eq false
     end
 
     it 'has collection_columns' do
@@ -124,7 +126,7 @@ RSpec.describe Ez::Resources::Manager::ConfigStore do
       expect(cfg.form_fields[2].title).to eq 'Gender'
       expect(cfg.form_fields[2].type).to eq  :select
       expect(cfg.form_fields[2].default.call).to eq 'Male'
-      expect(cfg.form_fields[2].collection).to eq ['Male', 'Female']
+      expect(cfg.form_fields[2].collection).to eq %w[Male Female]
 
       expect(cfg.form_fields[3]).to be_instance_of(Ez::Resources::Manager::Field)
       expect(cfg.form_fields[3].name).to eq :age

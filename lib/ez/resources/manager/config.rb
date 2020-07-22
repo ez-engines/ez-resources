@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Ez
   module Resources
     module Manager
@@ -16,13 +18,13 @@ module Ez
 
         def data
           @data ||= case controller.action_name
-          when 'index'  then collection
-          when 'new'    then new_resource
-          when 'show'   then resource
-          when 'edit'   then resource
-          when 'update' then resource
-          else
-            raise ConfigurationError, "Invalid action #{controller.action_name}"
+                    when 'index'  then collection
+                    when 'new'    then new_resource
+                    when 'show'   then resource
+                    when 'edit'   then resource
+                    when 'update' then resource
+                    else
+                      raise ConfigurationError, "Invalid action #{controller.action_name}"
           end
         end
 
@@ -106,18 +108,19 @@ module Ez
           return paginated_collection if paginate_collection?
 
           @collection ||= if dsl_config.collection_query
-            dsl_config.collection_query.call(model)
-          else
-            model.all
+                            dsl_config.collection_query.call(model, controller)
+                          else
+                            model.all
           end
         end
 
         def paginated_collection
+          @search = model.ransack(params[:q])
+
           @paginated_collection ||= if dsl_config.collection_query
-            pagy, paginated_collection = pagy dsl_config.collection_query.call(model)
-          else
-            @search = model.ransack(params[:q])
-            pagy, paginated_collection = pagy search.result.includes(dsl_config.includes)
+                                      pagy, paginated_collection = pagy dsl_config.collection_query.call(model, controller)
+                                    else
+                                      pagy, paginated_collection = pagy search.result.includes(dsl_config.includes)
           end
 
           @paginator = pagy

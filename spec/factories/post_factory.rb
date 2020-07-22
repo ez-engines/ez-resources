@@ -2,8 +2,8 @@
 
 FactoryBot.define do
   factory :post do
-    title      { |n| "test-title-#{n}" }
-    body       { FFaker::Lorem.sentence  }
-    published  { true  }
+    title      { FFaker::Lorem.sentence }
+    body       { FFaker::Lorem.sentence }
+    published  { true }
   end
 end

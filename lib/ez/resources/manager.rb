@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'ez/resources/manager/dsl'
 require 'ez/resources/manager/config'
 
@@ -19,9 +21,6 @@ module Ez
         end
       end
 
-      # TODO configurabe:
-      # 1. Collection method of .all or order
-
       def index
         Manager::Hooks.can!(:can_list?, ez_resource_config)
 
@@ -35,7 +34,7 @@ module Ez
         if ez_resource_config.show_action_renders_form?
           ez_resource_view :form, ez_resource_config
         else
-          # TODO render show cell
+          # TODO: render show cell
         end
       end
 
@@ -52,14 +51,14 @@ module Ez
 
         if @ez_resource.save
           flash[:notice] = t('messages.created',
-            resource_name: ez_resource_config.resource_name,
-            scope:         Ez::Resources.config.i18n_scope)
+                             resource_name: ez_resource_config.resource_name,
+                             scope:         Ez::Resources.config.i18n_scope)
 
           redirect_to ez_resource_config.path_for(action: :index)
         else
           flash[:alert] = t('messages.invalid',
-            resource_name: ez_resource_config.resource_name,
-            scope:         Ez::Resources.config.i18n_scope)
+                            resource_name: ez_resource_config.resource_name,
+                            scope:         Ez::Resources.config.i18n_scope)
 
           ez_resource_view :form, ez_resource_config
         end
@@ -78,22 +77,21 @@ module Ez
 
         if @ez_resource.update(ez_resource_params)
           flash[:notice] = t('messages.updated',
-            resource_name: ez_resource_config.resource_name,
-            scope:         Ez::Resources.config.i18n_scope)
+                             resource_name: ez_resource_config.resource_name,
+                             scope:         Ez::Resources.config.i18n_scope)
 
           redirect_to ez_resource_config.path_for(action: :index)
         else
           flash[:alert] = t('messages.invalid',
-            resource_name: ez_resource_config.resource_name,
-            scope:         Ez::Resources.config.i18n_scope)
+                            resource_name: ez_resource_config.resource_name,
+                            scope:         Ez::Resources.config.i18n_scope)
 
           ez_resource_view :form, ez_resource_config
         end
       end
 
       # TODO: Later
-      def destroy
-      end
+      def destroy; end
 
       private
 

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Ez
   module Resources
     class FormCell < ApplicationCell
@@ -13,7 +15,7 @@ module Ez
 
       def readonly?
         @readonly ||= !Ez::Resources::Manager::Hooks.can?(:can_create?, model, model.data) &&
-          !Ez::Resources::Manager::Hooks.can?(:can_update?, model, model.data)
+                      !Ez::Resources::Manager::Hooks.can?(:can_update?, model, model.data)
       end
 
       def submit_button_text

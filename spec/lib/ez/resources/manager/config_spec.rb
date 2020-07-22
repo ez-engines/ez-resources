@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Ez::Resources::Manager::Config do
@@ -96,7 +98,7 @@ RSpec.describe Ez::Resources::Manager::Config do
 
   context 'with dsl configuration' do
     before do
-      dsl_store.collection_query = ->(model) { model.preload(:posts) }
+      dsl_store.collection_query = ->(model, _ctx) { model.preload(:posts) }
       dsl_store.paginate_collection = false
     end
 

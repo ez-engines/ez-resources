@@ -6,7 +6,7 @@ FactoryBot.define do
     sequence(:name)  { |n| "test-user-#{n}-name" }
     age              { rand(18..65) }
     active           { true }
-    gender           { ['Male', 'Female', 'Other'].sample  }
-    notes            { FFaker::Lorem.sentence  }
+    gender           { %w[Male Female Other].sample }
+    notes            { FFaker::Lorem.sentence }
   end
 end

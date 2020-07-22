@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 module Ez
   module Resources
     class SearchCell < ApplicationCell
-      SEARCHABLE_FIELDS = %i[string association link]
+      SEARCHABLE_FIELDS = %i[string association link].freeze
 
       form
 
@@ -20,7 +22,7 @@ module Ez
       private
 
       def search_key(name, search_suffix, association_prefix = nil)
-        [association_prefix, name, search_suffix].compact.join("_").to_sym
+        [association_prefix, name, search_suffix].compact.join('_').to_sym
       end
 
       def association?(field)

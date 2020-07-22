@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Ez
   module Resources
     class CollectionCell < ApplicationCell
@@ -33,7 +35,7 @@ module Ez
 
       def record_tr(record, &block)
         if model.actions.include?(:show) && Manager::Hooks.can?(:can_read?, model, record)
-          content_tag :tr, class: css_for('collection-table-tr'), id: "#{resources_name.downcase}-#{record.id}", data: { link: "#{ model.path_for(action: :show, id: record.id) }" }, &block
+          content_tag :tr, class: css_for('collection-table-tr'), id: "#{resources_name.downcase}-#{record.id}", data: { link: model.path_for(action: :show, id: record.id).to_s }, &block
         else
           content_tag :tr, class: css_for('collection-table-tr'), id: "#{resources_name.downcase}-#{record.id}", &block
         end

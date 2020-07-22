@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'ez/resources/manager/hook'
 
 module Ez
@@ -8,7 +10,9 @@ module Ez
 
         def self.can!(name, config, data = nil)
           return true if config.hooks.empty?
-          return true if config.hooks.select { |h| h.name == name }.map { |h| h.callback.call(config.controller, data) }.all?(true)
+          if config.hooks.select { |h| h.name == name }.map { |h| h.callback.call(config.controller, data) }.all?(true)
+            return true
+          end
 
           raise UnavailableError, "Negative #{name}"
         end

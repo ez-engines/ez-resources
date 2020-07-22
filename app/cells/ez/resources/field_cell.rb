@@ -1,13 +1,14 @@
+# frozen_string_literal: true
+
 module Ez
   module Resources
     class FieldCell < ApplicationCell
-
       def html_options
         if options[:new_record?]
           base_options.merge(
-            selected: model.default&.call,
+            selected:   model.default&.call,
             input_html: {
-              value: model.default&.call,
+              value:   model.default&.call,
               checked: model.default&.call
             }
           )
@@ -28,8 +29,8 @@ module Ez
           unchecked_value: false.to_s,
           wrapper:         model.wrapper,
           right_label:     model.suffix,
-          input_html: {
-            min:   model.min
+          input_html:      {
+            min: model.min
           }
         }.merge(model.options)
       end

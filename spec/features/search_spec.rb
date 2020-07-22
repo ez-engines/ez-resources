@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 feature 'Collection page' do
@@ -30,7 +32,7 @@ feature 'Collection page' do
     scenario 'collection table rendered correctly' do
       is_expected.to have_content 'Users'
 
-      within ".ez-resources-collection-search-container" do
+      within '.ez-resources-collection-search-container' do
         is_expected.to have_content 'Search & Filter'
         is_expected.to have_field   'Email'
         is_expected.to have_field   'Gender'
@@ -48,7 +50,7 @@ feature 'Collection page' do
       context 'by resource field' do
         context 'when it is a string' do
           scenario 'returns proper result' do
-            within ".ez-resources-collection-search-container" do
+            within '.ez-resources-collection-search-container' do
               fill_in 'Email', with: 'user.a'
 
               click_button 'Apply'
@@ -58,7 +60,7 @@ feature 'Collection page' do
 
             expect(page).to have_selector('.ez-resources-collection-table-tr', count: 1)
 
-            within ".ez-resources-collection-search-container" do
+            within '.ez-resources-collection-search-container' do
               is_expected.to have_field 'Email', with: 'user.a'
             end
 
@@ -70,7 +72,7 @@ feature 'Collection page' do
 
         context 'when it is a link' do
           scenario 'returns proper result' do
-            within ".ez-resources-collection-search-container" do
+            within '.ez-resources-collection-search-container' do
               fill_in 'Name', with: 'user.a'
 
               click_button 'Apply'
@@ -80,7 +82,7 @@ feature 'Collection page' do
 
             expect(page).to have_selector('.ez-resources-collection-table-tr', count: 1)
 
-            within ".ez-resources-collection-search-container" do
+            within '.ez-resources-collection-search-container' do
               is_expected.to have_field 'Name', with: 'user.a'
             end
 
@@ -93,7 +95,7 @@ feature 'Collection page' do
 
       context 'by resource  association field' do
         scenario 'returns proper result' do
-          within ".ez-resources-collection-search-container" do
+          within '.ez-resources-collection-search-container' do
             fill_in 'Post title', with: 'atest'
 
             click_button 'Apply'
@@ -103,7 +105,7 @@ feature 'Collection page' do
 
           expect(page).to have_selector('.ez-resources-collection-table-tr', count: 1)
 
-          within ".ez-resources-collection-search-container" do
+          within '.ez-resources-collection-search-container' do
             is_expected.to have_field 'Post title', with: 'atest'
           end
 

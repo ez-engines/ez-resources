@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'ez/resources/manager/action'
 require 'ez/resources/manager/field'
 
@@ -18,7 +20,7 @@ module Ez
           @fields << Field.new(name: name, **options)
         end
 
-        alias_method :column, :field
+        alias column field
 
         def action(name, builder, options = {})
           @actions << Action.new(name, builder, **options)
