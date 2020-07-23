@@ -31,7 +31,7 @@ class UsersController < ApplicationController
     # config.model = User
 
     # Collection query or it will try to perfrom .all
-    # config.collection_query = ->(model, ctx) { model.where(user_id: ctx.params[:user_id]) }
+    # config.collection_query = -> (search_relation, ctx) { search_relation.where(user_id: ctx.params[:user_id]) }
 
     # Single resource title presentation
     # config.resource_label = :title

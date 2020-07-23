@@ -118,7 +118,7 @@ module Ez
           @search = model.ransack(params[:q])
 
           @paginated_collection ||= if dsl_config.collection_query
-                                      pagy, paginated_collection = pagy dsl_config.collection_query.call(model, controller)
+                                      pagy, paginated_collection = pagy dsl_config.collection_query.call(search.result, controller)
                                     else
                                       pagy, paginated_collection = pagy search.result.includes(dsl_config.includes)
           end
