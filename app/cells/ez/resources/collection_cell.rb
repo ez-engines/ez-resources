@@ -16,7 +16,7 @@ module Ez
       end
 
       def record_column_value(record, column)
-        if column.type == :association
+        result = if column.type == :association
           column.getter.call(record)
         elsif column.type == :boolean
           maybe_use_custom_boolean_presenter(record.public_send(column.name))
@@ -31,6 +31,9 @@ module Ez
         else
           record.public_send(column.name)
         end
+
+        result = column.presenter.call(record) if column.presenter
+        result
       end
 
       def record_tr(record, &block)

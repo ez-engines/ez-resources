@@ -6,8 +6,10 @@ class PostsController < ApplicationController
     config.collection_query = ->(model, ctx) { model.where(user_id: ctx.params[:user_id]) }
     config.resource_label = :title
     config.actions = %i[index]
+
     config.collection_columns do
-      column :title
+      column :title,
+        presenter: -> (post) { post.title.upcase }
       column :body
       column :user,
         type: :association,

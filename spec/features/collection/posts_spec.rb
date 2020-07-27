@@ -38,7 +38,7 @@ RSpec.describe 'Collection' do
     end
 
     within "tr#posts-#{post_a.id} > td.ez-t-title" do
-      is_expected.to have_content post_a.title
+      is_expected.to have_content post_a.title.upcase
     end
 
     within "tr#posts-#{post_a.id} > td.ez-t-body" do

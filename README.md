@@ -43,7 +43,7 @@ class UsersController < ApplicationController
     config.collection_columns do
       column :email
       column :active, type: :boolean
-      column :name,   type: :link
+      column :name,   type: :link, presenter: -> (user) { user.name.humanize }
       column :age
       column :avatar, type: :image,       getter:  ->(user) { "/avatars/#{user.id}.jpg" }, class: "t-image-tag"
       column :custom, type: :custom,      builder: ->(user) { "custom #{user.email}" }
