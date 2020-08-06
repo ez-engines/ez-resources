@@ -17,20 +17,20 @@ module Ez
 
       def record_column_value(record, column)
         result = if column.type == :association
-          column.getter.call(record)
-        elsif column.type == :boolean
-          maybe_use_custom_boolean_presenter(record.public_send(column.name))
-        elsif column.type == :custom
-          column.builder.call(record)
-        elsif column.type == :image
-          url = column.getter.call(record)
+                   column.getter.call(record)
+                 elsif column.type == :boolean
+                   maybe_use_custom_boolean_presenter(record.public_send(column.name))
+                 elsif column.type == :custom
+                   column.builder.call(record)
+                 elsif column.type == :image
+                   url = column.getter.call(record)
 
-          image_tag url, column.options if url
-        elsif column.type == :link
-          as_a_link(record, column)
-        else
-          record.public_send(column.name)
-        end
+                   image_tag url, column.options if url
+                 elsif column.type == :link
+                   as_a_link(record, column)
+                 else
+                   record.public_send(column.name)
+                end
 
         result = column.presenter.call(record) if column.presenter
         result
