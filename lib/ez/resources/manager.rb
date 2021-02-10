@@ -27,7 +27,6 @@ module Ez
         ez_resource_view :collection, ez_resource_config
       end
 
-      # TODO: Later
       def show
         Manager::Hooks.can!(:can_read?, ez_resource_config)
 

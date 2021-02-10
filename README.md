@@ -51,6 +51,9 @@ class UsersController < ApplicationController
       column :title,  type: :association, getter:  ->(user) { user.posts.pluck(:title) }, association: :posts, title: 'Post title'
     end
 
+    # Add custom collection templates
+    # config.collection_views = [:table, :gallery]
+
     # Form fields
     config.form_fields do
       field :email

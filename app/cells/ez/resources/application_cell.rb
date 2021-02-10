@@ -3,7 +3,7 @@
 module Ez
   module Resources
     class ApplicationCell < Cell::ViewModel
-      self.view_paths = ["#{Ez::Resources::Engine.root}/app/cells"]
+      self.view_paths = ["#{Ez::Resources::Engine.root}/app/cells", "#{::Rails.root}/app/cells/custom"]
 
       CSS_SCOPE = 'ez-resources'
 

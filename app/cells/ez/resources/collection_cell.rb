@@ -7,6 +7,14 @@ module Ez
 
       delegate :resources_name, :collection_columns, :paginator, to: :model
 
+      def show
+        if model.params[:view]
+          render params[:view]
+        else
+          render :table
+        end
+      end
+
       def collection
         @collection ||= model.data
       end
@@ -81,6 +89,17 @@ module Ez
           instance_exec paginator, &Ez::Resources.config.pagination_method
         else
           pagy_nav(paginator)
+        end
+      end
+
+      def view_switch_link(view_name)
+        return unless model.collection_views.present?
+
+        params = model.params.to_unsafe_hash.slice(:q, :page, :s).symbolize_keys.merge(view: view_name)
+        selected = css_for('collection-view-selected-link') if model.params[:view] == view_name.to_s
+
+        link_to model.path_for(action: :index, params: params), id: "ez-view-#{view_name}", class: css_for("collection-view-link-#{view_name}", selected) do
+          content_tag :i, nil, class: css_for("collection-view-link-#{view_name}-icon")
         end
       end
 

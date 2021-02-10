@@ -70,6 +70,10 @@ module Ez
           @collection_search ||= dsl_config.collection_search != false
         end
 
+        def collection_views
+          @collection_views ||= dsl_config.collection_views || []
+        end
+
         def collection_columns
           @collection_columns ||= dsl_config.collection_columns || model.columns.map do |column|
             Ez::Resources::Manager::Field.new(
@@ -88,9 +92,11 @@ module Ez
           @form_fields ||= dsl_config.form_fields || collection_columns || []
         end
 
-        def path_for(action:, id: nil)
+        def path_for(action:, id: nil, params: nil)
           if id
             controller.url_for(action: action, id: id, only_path: true)
+          elsif params
+            controller.url_for(action: action, **params, only_path: true)
           else
             controller.url_for(action: action, only_path: true)
           end
@@ -111,7 +117,7 @@ module Ez
                             dsl_config.collection_query.call(model, controller)
                           else
                             model.all
-          end
+                          end
         end
 
         def paginated_collection
@@ -121,7 +127,7 @@ module Ez
                                       pagy, paginated_collection = pagy dsl_config.collection_query.call(search.result, controller)
                                     else
                                       pagy, paginated_collection = pagy search.result.includes(dsl_config.includes)
-          end
+                                    end
 
           @paginator = pagy
           paginated_collection

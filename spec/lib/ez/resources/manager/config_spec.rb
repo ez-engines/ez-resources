@@ -93,6 +93,12 @@ RSpec.describe Ez::Resources::Manager::Config do
           expect(cfg.collection_search?).to eq true
         end
       end
+
+      describe '#collection_views' do
+        it 'true by default' do
+          expect(cfg.collection_views).to eq []
+        end
+      end
     end
   end
 

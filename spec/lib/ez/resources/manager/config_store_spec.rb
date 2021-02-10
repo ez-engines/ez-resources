@@ -12,6 +12,7 @@ RSpec.describe Ez::Resources::Manager::ConfigStore do
       config.collection_query = ->(model) { "#{model} query" }
       config.paginate_collection = false
       config.collection_search = false
+      config.collection_views = %i[show gallery]
       config.resource_name = 'Resource Name'
       config.resource_label = :email
       config.resources_name = 'Resources'
@@ -59,6 +60,10 @@ RSpec.describe Ez::Resources::Manager::ConfigStore do
 
     it 'has collection_search' do
       expect(cfg.collection_search).to eq false
+    end
+
+    it 'has collection_views' do
+      expect(cfg.collection_views).to eq %i[show gallery]
     end
 
     it 'build resource_name' do

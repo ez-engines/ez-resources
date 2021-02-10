@@ -48,5 +48,15 @@ RSpec.describe 'Collection' do
     within "tr#posts-#{post_a.id} > td.ez-t-user" do
       is_expected.to have_content post_a.user.email
     end
+
+    within '.ez-resources-collection-actions-container' do
+      is_expected.to have_link '', href: "/users/#{user_a.id}/posts?view=table"
+      is_expected.to have_link '', href: "/users/#{user_a.id}/posts?view=gallery"
+
+      find('#ez-view-gallery').click
+    end
+
+    is_expected.to have_current_path "/users/#{user_a.id}/posts?view=gallery"
+    is_expected.to have_content 'Hello from gallery view'
   end
 end
