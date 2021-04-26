@@ -1,0 +1,25 @@
+en:
+  ez_resources:
+    actions:
+      show: Show
+      add: Add
+      new: New
+      create: Create
+      edit: Edit
+      update: Update
+      cancel: Cancel
+      apply: Apply
+      reset: Reset
+      clone: Clone
+    phrases:
+      search_and_filter: Search & Filter
+    search:
+      suffix:
+        cont: contains
+        eq: equal
+    messages:
+      created: "%{resource_name} was successfully created"
+      updated: "%{resource_name} was successfully updated"
+      removed: "%{resource_name} was successfully removed"
+      invalid: "Invalid %{resource_name} attributes. Please, check the errors below"
+      unavailable: Sorry, but this action is unavailable
