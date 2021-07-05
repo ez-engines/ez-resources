@@ -3,9 +3,19 @@
 module Ez
   module Resources
     class SearchCell < ApplicationCell
-      SEARCHABLE_FIELDS = %i[string association link].freeze
+      SEARCHABLE_FIELDS = %i[string association select link boolean].freeze
 
       form
+
+      def cast_field_type(type)
+        case type
+        when :link then :string
+        when :boolean then :select
+        when :association then :string
+        else
+          type
+        end
+      end
 
       def field_name(field)
         if association?(field)

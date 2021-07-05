@@ -13,6 +13,7 @@ feature 'Collection page' do
   def search_url(options)
     fields = %w[
       email_cont
+      active_eq
       name_cont
       age_cont
       gender_cont
@@ -40,9 +41,7 @@ feature 'Collection page' do
         is_expected.to have_field   'Name'
         is_expected.to have_field   'Post title'
 
-        # TODO: Support other types: boolean, text, association, etc
-        # is_expected.to have_unchecked_field 'Active'
-        # is_expected.to have_field 'Notes'
+        is_expected.to have_select 'Active', options: ['', 'yes', 'no']
       end
     end
 
@@ -116,24 +115,4 @@ feature 'Collection page' do
       end
     end
   end
-
-  # TODO: Disvover why it not works with integer values
-  #=== Can search by age contains ===========================================
-  # within ".ez-resources-collection-search-container" do
-  #   fill_in 'Age', with: '23'
-
-  #   click_button 'Apply'
-  # end
-
-  # is_expected.to have_current_path '/users?q[email_cont]=user.a&q[age_cont]=23&commit=Apply'
-
-  # within ".ez-resources-collection-search-container" do
-  #   is_expected.to have_field 'Age', with: '23'
-  # end
-
-  # is_expected.to have_content 'Users (1)'
-
-  # within "tr#users-#{user_a.id} > td.ez-t-email" do
-  #   is_expected.to have_content user_a.email
-  # end
 end

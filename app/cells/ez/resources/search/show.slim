@@ -5,13 +5,14 @@
     = div_for 'collection-search-panel-form'
       = simple_form_for model.search, url: model.path_for(action: :index), method: :get do |f|
         - model.collection_columns.each do |field|
-          - if field.searchable
-            - if SEARCHABLE_FIELDS.include?(field.type)
-              = div_for 'collection-search-panel-field'
-                = f.input   field_name(field),
-                  label:    field_label(field),
-                  required: false,
-                  as:       :string
+          - if field.searchable && SEARCHABLE_FIELDS.include?(field.type)
+            = div_for 'collection-search-panel-field'
+              = f.input   field_name(field),
+                label:    field_label(field),
+                required: false,
+                as:       cast_field_type(field.type),
+                collection: field.collection,
+                include_blank: true
 
         = f.submit t('actions.apply'), class: css_for('collection-search-panel-submit-button')
 
