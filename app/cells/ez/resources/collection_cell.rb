@@ -46,9 +46,9 @@ module Ez
 
       def record_tr(record, &block)
         if model.actions.include?(:show) && Manager::Hooks.can?(:can_read?, model, record)
-          content_tag :tr, class: css_for('collection-table-tr'), id: "#{model.model.name.pluralize.downcase}-#{record.id}", data: { link: model.path_for(action: :show, id: record.id).to_s }, &block
+          content_tag :tr, class: css_for('collection-table-tr'), id: "#{model.model.name.demodulize.pluralize.downcase}-#{record.id}", data: { link: model.path_for(action: :show, id: record.id).to_s }, &block
         else
-          content_tag :tr, class: css_for('collection-table-tr'), id: "#{model.model.name.pluralize.downcase}-#{record.id}", &block
+          content_tag :tr, class: css_for('collection-table-tr'), id: "#{model.model.name.demodulize.pluralize.downcase}-#{record.id}", &block
         end
       end
 
