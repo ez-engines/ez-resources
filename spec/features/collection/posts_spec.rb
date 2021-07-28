@@ -14,7 +14,7 @@ RSpec.describe 'Collection' do
     visit "/users/#{user_a.id}/posts"
 
     within '.ez-resources-collection-header-container' do
-      is_expected.to have_content 'Posts'
+      is_expected.to have_content 'Articles'
     end
 
     within '.ez-resources-collection-actions-container' do
