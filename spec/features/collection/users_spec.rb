@@ -33,6 +33,7 @@ RSpec.describe 'Collection' do
       is_expected.to have_link 'Show', href: "/users/#{user_a.id}"
       is_expected.to have_link 'Edit', href: "/users/#{user_a.id}/edit"
       is_expected.to have_link 'Clone', href: "/users/#{user_a.id}/clone"
+      is_expected.to have_link 'Remove', href: "/users/#{user_a.id}"
     end
 
     within "tr#users-#{user_a.id} > td.ez-t-email" do

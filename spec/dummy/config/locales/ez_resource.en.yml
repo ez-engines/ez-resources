@@ -11,6 +11,7 @@ en:
       apply: Apply
       reset: Reset
       clone: Clone
+      remove: Remove
     phrases:
       search_and_filter: Search & Filter
     search:
