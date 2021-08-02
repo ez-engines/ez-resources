@@ -18,11 +18,12 @@ module Ez
 
         def data
           @data ||= case controller.action_name
-                    when 'index'  then collection
-                    when 'new'    then new_resource
-                    when 'show'   then resource
-                    when 'edit'   then resource
-                    when 'update' then resource
+                    when 'index'   then collection
+                    when 'new'     then new_resource
+                    when 'show'    then resource
+                    when 'edit'    then resource
+                    when 'update'  then resource
+                    when 'destroy' then resource
                     else
                       raise ConfigurationError, "Invalid action #{controller.action_name}"
           end

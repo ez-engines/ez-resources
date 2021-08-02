@@ -89,8 +89,16 @@ module Ez
         end
       end
 
-      # TODO: Later
-      def destroy; end
+      def destroy
+        Manager::Hooks.can?(:can_destroy?, ez_resource_config, ez_resource_config.data)
+        ez_resource_config.data.delete
+
+        flash[:notice] = t('messages.removed',
+                           resource_name: ez_resource_config.resource_name,
+                           scope:         Ez::Resources.config.i18n_scope)
+
+        redirect_to ez_resource_config.path_for(action: :index)
+      end
 
       private
 
