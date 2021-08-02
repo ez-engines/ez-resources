@@ -90,6 +90,7 @@ module Ez
       end
 
       def destroy
+        Manager::Hooks.can?(:can_destroy?, ez_resource_config, ez_resource_config.data)
         ez_resource_config.data.delete
 
         flash[:notice] = t('messages.removed',

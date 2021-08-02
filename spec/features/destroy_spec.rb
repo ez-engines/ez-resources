@@ -10,7 +10,7 @@ RSpec.describe 'Edit' do
 
   it 'render edit form' do
     visit '/users'
-    save_and_open_page
+
     expect(User.count).to eq 1
 
     click_link 'Remove'

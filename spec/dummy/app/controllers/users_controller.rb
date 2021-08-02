@@ -26,7 +26,8 @@ class UsersController < ApplicationController
     end
 
     config.hooks do
-      add :can_update?, proc { |ctx, user| user.age >= 18 }
+      add :can_update?,  proc { |ctx, user| user.age >= 18 }
+      add :can_destroy?, proc { true }
     end
   end
 end

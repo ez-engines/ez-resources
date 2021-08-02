@@ -82,9 +82,11 @@ module Ez
 
       def remove_link(record)
         return unless model.actions.include?(:destroy)
-        return unless Manager::Hooks.can?(:can_read?, model, record)
+        return unless Manager::Hooks.can?(:can_destroy?, model, record)
 
-        link_to t('actions.remove'), model.path_for(action: :destroy, id: record.id), method: :delete, class: css_for('collection-table-td-action-item')
+        link_to t('actions.remove'), model.path_for(action: :destroy, id: record.id),
+          method: :delete,
+          class: css_for('collection-table-td-action-item')
       end
 
       def pagination
