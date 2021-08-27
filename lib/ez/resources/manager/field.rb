@@ -18,6 +18,7 @@ module Ez
                     :presenter,
                     :builder,
                     :searchable,
+                    :sortable,
                     :search_suffix,
                     :options
 
@@ -35,6 +36,7 @@ module Ez
           @getter        = options.delete(:getter)
           @presenter     = options.delete(:presenter)
           @searchable    = options.delete(:searchable) != false
+          @sortable      = options.delete(:sortable) || false
           @search_suffix = options.delete(:search_suffix) || :cont
           @options       = options # use for all other custom options
         end

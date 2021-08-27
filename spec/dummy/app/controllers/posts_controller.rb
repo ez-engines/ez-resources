@@ -11,7 +11,8 @@ class PostsController < ApplicationController
 
     config.collection_columns do
       column :title,
-        presenter: -> (post) { post.title.upcase }
+        presenter: -> (post) { post.title.upcase },
+        sortable: true
       column :body
       column :user,
         type: :association,

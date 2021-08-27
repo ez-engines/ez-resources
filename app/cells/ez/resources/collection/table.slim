@@ -17,7 +17,7 @@
           thead class=(css_for 'collection-table-thead')
             tr class=(css_for 'collection-table-thead-tr')
               - collection_columns.each do |column|
-                th class=(css_for 'collection-table-thead-th') id=("ez-t-#{column.name}") = column.title
+                th class=(css_for 'collection-table-thead-th') id=("ez-t-#{column.name}") = column_title(column)
               th class=(css_for 'collection-table-thead-th') colspan="2" style="width: 1%"
           tbody class=(css_for 'collection-table-tbody')
             - collection.each do |record|
