@@ -11,6 +11,7 @@ require 'rspec/rails'
 require 'pry-rails'
 require 'factory_bot_rails'
 require 'ffaker'
+require 'orderly'
 
 Dir['spec/support/*.rb'].sort.each { |f| require f }
 

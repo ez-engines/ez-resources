@@ -4,6 +4,7 @@ module Ez
   module Resources
     class CollectionCell < ApplicationCell
       include Pagy::Frontend
+      include Ransack::Helpers::FormHelper
 
       delegate :resources_name, :collection_columns, :paginator, to: :model
 
@@ -108,12 +109,20 @@ module Ez
         end
       end
 
+      def column_title(column)
+        column.sortable ? sort_link(search, column.name, column.title) : column.title
+      end
+
       private
 
       def maybe_use_custom_boolean_presenter(bool)
         return bool unless Ez::Resources.config.ui_custom_boolean_presenter
 
         instance_exec bool, &Ez::Resources.config.ui_custom_boolean_presenter
+      end
+
+      def search
+        @search ||= model.model.ransack(model.params[:q])
       end
     end
   end
