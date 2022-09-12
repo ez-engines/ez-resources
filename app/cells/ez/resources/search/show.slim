@@ -7,7 +7,7 @@
         - model.collection_columns.each do |field|
           - if field.searchable && SEARCHABLE_FIELDS.include?(field.type)
             = div_for 'collection-search-panel-field'
-              = f.input   field_name(field),
+              = f.input   field_input_name(field),
                 label:    field_label(field),
                 required: false,
                 as:       cast_field_type(field.type),

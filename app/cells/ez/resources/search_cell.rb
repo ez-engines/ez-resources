@@ -17,7 +17,7 @@ module Ez
         end
       end
 
-      def field_name(field)
+      def field_input_name(field)
         if association?(field)
           search_key(field.name, field.search_suffix, field.options.fetch(:association))
         else
