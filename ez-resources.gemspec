@@ -23,7 +23,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'ez-core',     '~> 0.2'
   s.add_dependency 'pagy',        '~> 4.3'
   s.add_dependency 'rails',       '>= 5.2'
-  s.add_dependency 'ransack',     '~> 2.3'
+  s.add_dependency 'ransack',     '>= 2.3'
   s.add_dependency 'simple_form', '>= 5.0.1'
 
   s.add_development_dependency 'bundler', '~> 2.0'
