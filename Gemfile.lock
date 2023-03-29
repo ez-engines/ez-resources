@@ -7,7 +7,7 @@ PATH
       ez-core (~> 0.2)
       pagy (~> 4.3)
       rails (>= 5.2)
-      ransack (~> 2.3)
+      ransack (>= 2.3)
       simple_form (>= 5.0.1)
 
 GEM
