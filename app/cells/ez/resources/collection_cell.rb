@@ -25,21 +25,22 @@ module Ez
       end
 
       def record_column_value(record, column)
-        result = if column.type == :association
+        result = case column.type
+                 when :association
                    column.getter.call(record)
-                 elsif column.type == :boolean
+                 when :boolean
                    maybe_use_custom_boolean_presenter(record.public_send(column.name))
-                 elsif column.type == :custom
+                 when :custom
                    column.builder.call(record)
-                 elsif column.type == :image
+                 when :image
                    url = column.getter.call(record)
 
                    image_tag url, column.options if url
-                 elsif column.type == :link
+                 when :link
                    as_a_link(record, column)
                  else
                    record.public_send(column.name)
-                end
+                 end
 
         result = column.presenter.call(record) if column.presenter
         result
@@ -47,9 +48,11 @@ module Ez
 
       def record_tr(record, &block)
         if model.actions.include?(:show) && Manager::Hooks.can?(:can_read?, model, record)
-          content_tag :tr, class: css_for('collection-table-tr'), id: "#{model.model.name.demodulize.pluralize.downcase}-#{record.id}", data: { link: model.path_for(action: :show, id: record.id).to_s }, &block
+          content_tag :tr,
+                      class: css_for('collection-table-tr'), id: "#{model.model.name.demodulize.pluralize.downcase}-#{record.id}", data: { link: model.path_for(action: :show, id: record.id).to_s }, &block
         else
-          content_tag :tr, class: css_for('collection-table-tr'), id: "#{model.model.name.demodulize.pluralize.downcase}-#{record.id}", &block
+          content_tag :tr,
+                      class: css_for('collection-table-tr'), id: "#{model.model.name.demodulize.pluralize.downcase}-#{record.id}", &block
         end
       end
 
@@ -64,7 +67,8 @@ module Ez
         return unless model.actions.include?(:show)
         return unless Manager::Hooks.can?(:can_read?, model, record)
 
-        link_to t('actions.show'), model.path_for(action: :show, id: record.id), class: css_for('collection-table-td-action-item')
+        link_to t('actions.show'), model.path_for(action: :show, id: record.id),
+                class: css_for('collection-table-td-action-item')
       end
 
       def as_a_link(record, column)
@@ -78,7 +82,8 @@ module Ez
         return unless model.actions.include?(:edit)
         return unless Manager::Hooks.can?(:can_read?, model, record)
 
-        link_to t('actions.edit'), model.path_for(action: :edit, id: record.id), class: css_for('collection-table-td-action-item')
+        link_to t('actions.edit'), model.path_for(action: :edit, id: record.id),
+                class: css_for('collection-table-td-action-item')
       end
 
       def remove_link(record)
@@ -86,8 +91,8 @@ module Ez
         return unless Manager::Hooks.can?(:can_destroy?, model, record)
 
         link_to t('actions.remove'), model.path_for(action: :destroy, id: record.id),
-          method: :delete,
-          class: css_for('collection-table-td-action-item')
+                method: :delete,
+                class:  css_for('collection-table-td-action-item')
       end
 
       def pagination
@@ -104,7 +109,8 @@ module Ez
         params = model.params.to_unsafe_hash.slice(:q, :page, :s).symbolize_keys.merge(view: view_name)
         selected = css_for('collection-view-selected-link') if model.params[:view] == view_name.to_s
 
-        link_to model.path_for(action: :index, params: params), id: "ez-view-#{view_name}", class: css_for("collection-view-link-#{view_name}", selected) do
+        link_to model.path_for(action: :index, params: params), id:    "ez-view-#{view_name}",
+                                                                class: css_for("collection-view-link-#{view_name}", selected) do
           content_tag :i, nil, class: css_for("collection-view-link-#{view_name}-icon")
         end
       end

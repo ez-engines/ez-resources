@@ -6,7 +6,7 @@ RSpec.describe 'Collection' do
   subject { page }
 
   let!(:user_a) { create(:user) }
-  let!(:user_b) { create(:user, age: 17,) }
+  let!(:user_b) { create(:user, age: 17) }
   let!(:post_a) { create(:post, user: user_a, title: 'abc') }
   let!(:post_b) { create(:post, user: user_b) }
   let!(:post_c) { create(:post, user: user_a, title: 'Cba') }
@@ -51,7 +51,7 @@ RSpec.describe 'Collection' do
       end
     end
 
-    #Sorting
+    # Sorting
     post_a_tr = find("tr#posts-#{post_a.id}")
     post_c_tr = find("tr#posts-#{post_c.id}")
     expect(post_a_tr).to appear_before(post_c_tr)
@@ -63,7 +63,7 @@ RSpec.describe 'Collection' do
 
     click_link 'Reset'
 
-# http://www.example.com/users/1/posts?q%5Bs%5D=title+desc
+    # http://www.example.com/users/1/posts?q%5Bs%5D=title+desc
 
     within '.ez-resources-collection-actions-container' do
       is_expected.to have_link '', href: "/users/#{user_a.id}/posts?view=table"
