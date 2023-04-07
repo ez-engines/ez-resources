@@ -38,7 +38,7 @@ feature 'Collection page' do
         is_expected.to have_field   'Email'
         is_expected.to have_field   'Gender'
         is_expected.to have_field   'Age'
-        is_expected.to have_field   'Name'
+        is_expected.to have_field   'Filter by name'
         is_expected.to have_field   'Post title'
 
         is_expected.to have_select 'Active', options: ['', 'yes', 'no']
@@ -72,7 +72,7 @@ feature 'Collection page' do
         context 'when it is a link' do
           scenario 'returns proper result' do
             within '.ez-resources-collection-search-container' do
-              fill_in 'Name', with: 'user.a'
+              fill_in 'Filter by name', with: 'user.a'
 
               click_button 'Apply'
             end
@@ -82,7 +82,7 @@ feature 'Collection page' do
             expect(page).to have_selector('.ez-resources-collection-table-tr', count: 1)
 
             within '.ez-resources-collection-search-container' do
-              is_expected.to have_field 'Name', with: 'user.a'
+              is_expected.to have_field 'Filter by name', with: 'user.a'
             end
 
             within "tr#users-#{user_a.id} > td.ez-t-name" do

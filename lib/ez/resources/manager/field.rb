@@ -20,6 +20,7 @@ module Ez
                     :searchable,
                     :sortable,
                     :search_suffix,
+                    :search_label,
                     :options
 
         def initialize(options = {})
@@ -38,6 +39,7 @@ module Ez
           @searchable    = options.delete(:searchable) != false
           @sortable      = options.delete(:sortable) || false
           @search_suffix = options.delete(:search_suffix) || :cont
+          @search_label  = options.delete(:search_label)
           @options       = options # use for all other custom options
         end
 
