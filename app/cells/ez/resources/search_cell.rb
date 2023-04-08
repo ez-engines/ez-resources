@@ -26,7 +26,7 @@ module Ez
       end
 
       def field_label(field)
-        "#{field.title} (#{t "search.suffix.#{field.search_suffix}"})"
+        field.search_label || "#{field.title} (#{t "search.suffix.#{field.search_suffix}"})"
       end
 
       private

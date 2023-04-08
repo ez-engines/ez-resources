@@ -13,7 +13,7 @@ class UsersController < ApplicationController
     config.collection_columns do
       column :email
       column :active, type: :boolean, search_suffix: :eq, collection: [['yes', true], ['no', false]]
-      column :name,   type: :link
+      column :name,   type: :link, search_label: 'Filter by name'
       column :age
       column :avatar, type: :image,       getter:  ->(user) { "/avatars/#{user.id}.jpg" }, class: "t-image-tag"
       column :custom, type: :custom,      builder: ->(user) { "custom #{user.email}" }
