@@ -56,6 +56,10 @@ module Ez
         end
       end
 
+      def custom_action_label(action)
+        action.options[:title] || t("actions.#{action.name}")
+      end
+
       def new_link
         return unless model.actions.include?(:new)
         return unless Manager::Hooks.can?(:can_create?, model)

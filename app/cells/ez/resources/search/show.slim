@@ -7,12 +7,21 @@
         - model.collection_columns.each do |field|
           - if field.searchable && SEARCHABLE_FIELDS.include?(field.type)
             = div_for 'collection-search-panel-field'
-              = f.input   field_input_name(field),
-                label:    field_label(field),
-                required: false,
-                as:       cast_field_type(field.type),
-                collection: field.collection,
-                include_blank: true
+              - if field.type == :checkboxes
+                = label_tag field.search_label
+                .checkboxes
+                  - field.collection.each do |item|
+                    .ui.checkbox
+                      - checked = params.dig(:q, field.search_suffix) || []
+                      = check_box_tag("q[#{field.search_suffix}][]", item.id, checked.include?(item.id.to_s), id: "checkbox-#{item.id}")
+                      = label_tag item.id, item.name
+              - else
+                = f.input   field_input_name(field),
+                  label:    field_label(field),
+                  required: false,
+                  as:       cast_field_type(field.type),
+                  collection: field.collection,
+                  include_blank: true
 
         = f.submit t('actions.apply'), class: css_for('collection-search-panel-submit-button')
 

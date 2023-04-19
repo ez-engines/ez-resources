@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-feature 'Collection page' do
+feature 'Collection users page' do
   subject { page }
 
   let!(:user_a) { create(:user, email: 'user.a@mail.test', age: '23', name: 'user.a.name') }

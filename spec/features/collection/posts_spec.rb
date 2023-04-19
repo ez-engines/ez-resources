@@ -47,7 +47,7 @@ RSpec.describe 'Collection' do
       end
 
       within "tr#posts-#{post.id} > td.ez-t-user" do
-        is_expected.to have_content post.user.email
+        is_expected.to have_content post.user.name
       end
     end
 
