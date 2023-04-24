@@ -3,7 +3,7 @@
 module Ez
   module Resources
     class SearchCell < ApplicationCell
-      SEARCHABLE_FIELDS = %i[string association select link boolean].freeze
+      SEARCHABLE_FIELDS = %i[string association select link boolean checkboxes].freeze
 
       form
 
@@ -37,6 +37,10 @@ module Ez
 
       def association?(field)
         field.type == :association && field.options[:association].present?
+      end
+
+      def checked_checkbox
+        params.dig(:q, field.search_suffix) || []
       end
     end
   end

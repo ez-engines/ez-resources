@@ -15,9 +15,11 @@ class PostsController < ApplicationController
         sortable: true
       column :body
       column :user,
-        type: :association,
-        getter:  ->(post) { post.user.email },
-        searchable:  false
+        type: :checkboxes,
+        search_suffix: :user_id_eq_any,
+        collection: User.all,
+        presenter:  ->(post) { post.user.name },
+        search_label: 'User name'
     end
   end
 end

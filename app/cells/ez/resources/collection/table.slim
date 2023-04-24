@@ -33,7 +33,7 @@
                       = edit_link(record)
                       = remove_link(record)
                       - model.collection_actions.each do |custom_action|
-                        = link_to t("actions.#{custom_action.name}"), custom_action.builder.call(controller, record), custom_action.options.merge(class: css_for('collection-table-td-action-item'))
+                        = link_to custom_action_label(custom_action), custom_action.builder.call(controller, record), custom_action.options.merge(class: css_for('collection-table-td-action-item'))
 
         - if paginator && paginator.count > 20
           == pagination
