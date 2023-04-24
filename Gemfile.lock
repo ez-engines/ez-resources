@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    ez-resources (0.2.2)
+    ez-resources (0.2.3)
       cells-rails (~> 0.1.0)
       cells-slim (~> 0.0.6)
       ez-core (~> 0.2)
