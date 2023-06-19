@@ -21,7 +21,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'cells-rails', '~> 0.1.0'
   s.add_dependency 'cells-slim',  '~> 0.0.6'
   s.add_dependency 'ez-core',     '~> 0.2'
-  s.add_dependency 'pagy',        '~> 4.3'
+  s.add_dependency 'pagy',        '>= 6.0.4'
   s.add_dependency 'rails',       '>= 5.2'
   s.add_dependency 'ransack',     '>= 2.3'
   s.add_dependency 'simple_form', '>= 5.0.1'
