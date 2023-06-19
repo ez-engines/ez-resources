@@ -5,7 +5,7 @@ PATH
       cells-rails (~> 0.1.0)
       cells-slim (~> 0.0.6)
       ez-core (~> 0.2)
-      pagy (~> 4.3)
+      pagy (>= 6.0.4)
       rails (>= 5.2)
       ransack (>= 2.3)
       simple_form (>= 5.0.1)
@@ -152,7 +152,7 @@ GEM
     mini_portile2 (2.5.3)
     minitest (5.14.4)
     nenv (0.3.0)
-    net-imap (0.3.4)
+    net-imap (0.3.6)
       date
       net-protocol
     net-pop (0.1.2)
@@ -171,7 +171,7 @@ GEM
     orderly (0.1.1)
       capybara (>= 1.1)
       rspec (>= 2.14)
-    pagy (4.11.0)
+    pagy (6.0.4)
     parallel (1.20.1)
     parser (3.0.1.0)
       ast (~> 2.4.1)

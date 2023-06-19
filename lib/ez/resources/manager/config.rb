@@ -129,9 +129,9 @@ module Ez
                                       pagy, paginated_collection = pagy dsl_config.collection_query.call(search.result,
                                                                                                          controller)
                                     else
-                                      pagy, paginated_collection = pagy search.result.includes(dsl_config.includes)
+                                      pagy, paginated_collection = pagy search.result.includes(dsl_config.includes),
+                                                                        items_param: :items
                                     end
-
           @paginator = pagy
           paginated_collection
         end
